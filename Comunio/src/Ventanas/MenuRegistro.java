@@ -4,6 +4,9 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+
+import Connection.Conexion;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -17,22 +20,15 @@ public class MenuRegistro {
 	private JTextField textoContraseña;
 	
 	private static Connection conexion = null;
-    private static String bd = "ComunioGM"; // Nombre de BD.
-    private static String user = ""; // Usuario de BD.
-    private static String password = ""; // Password de BD.
-    // Driver para MySQL en este caso.
-    private static String driver = "com.mysql.jdbc.Driver";
+    
+    
+    
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		Connection conn =null;
-		try{
-			conn = DriverManager.getConnection("jdbc:sqlite:n.db");
-		}catch(Exception e){
-			e.printStackTrace();
-		}
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -97,4 +93,6 @@ public class MenuRegistro {
 		Login.setBounds(240, 188, 89, 23);
 		frame.getContentPane().add(Login);
 	}
+
+	
 }
