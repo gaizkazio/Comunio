@@ -3,6 +3,11 @@ package Entidades;
 public class Usuario {
 private String nombre,contraseña;
 
+public Usuario(String nombreU,String contraseñaU){
+	nombre=nombreU;
+	contraseña=contraseñaU;
+}
+
 public String getNombre() {
 	return nombre;
 }

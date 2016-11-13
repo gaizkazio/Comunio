@@ -84,6 +84,7 @@ public class MenuRegistro {
 		BotonRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				
 			}
 		});
 		BotonRegistro.setBounds(97, 188, 89, 23);
