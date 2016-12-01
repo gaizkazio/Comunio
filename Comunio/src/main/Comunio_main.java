@@ -14,8 +14,8 @@ public class Comunio_main {
 		Connection con =Bd.initBD("ComunioBD");
 		bd_statements bds= new bd_statements();
 		Statement stmt=bd.usarBD(con);
-		bds.metodoInsert(stmt, "usuario");
-		bds.seleccionarTodosLosValores("", "usuario", con);
+		
+		bds.metodoAlter(stmt,"usuario");
 		
 	}
 }

@@ -1,49 +1,62 @@
 package Ventanas;
 
-import java.awt.EventQueue;
+import javax.swing.*;
 
-import javax.swing.JFrame;
-import javax.swing.JButton;
+public class Noticias extends JFrame{
 
-public class Noticias {
+	public Noticias(){
 
-	private JFrame frame;
+		//Parametros asociados a la ventana
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(MAXIMIZED_BOTH);
+		setVisible(true);
+		setTitle("Ejemplo JTabbedPane");
 
-	/**
-	 * Launch the application.
-	 */
+		//Creamos el conjunto de pestañas
+		JTabbedPane pestañas=new JTabbedPane();
+
+		//Creamos el panel y lo añadimos a las pestañas
+		JPanel panel1=new JPanel();
+
+		//Componentes del panel1
+		JLabel et_p1=new JLabel("Estas en Noticias");
+		panel1.add(et_p1);
+
+		//Añadimos un nombre de la pestaña y el panel
+		pestañas.addTab("Noticias", panel1);
+
+		//Realizamos lo mismo con el resto
+		JPanel panel2=new JPanel();
+		pestañas.addTab("Mercado", panel2);
+
+		//Componentes del panel2
+		JLabel et_p2=new JLabel("Estas en el Mercado de Fichajes");
+		panel2.add(et_p2);
+
+		JPanel panel3=new JPanel();
+
+		//Componentes del panel3
+		JLabel et_p3=new JLabel("Estas en Puntuacion");
+		panel3.add(et_p3);
+
+		pestañas.addTab("Puntuacion", panel3);
+
+		JPanel panel4=new JPanel();
+
+		//Componentes del panel4
+		JLabel et_p4=new JLabel("Estas en Alineacion");
+		panel4.add(et_p4);
+
+		pestañas.addTab("Alineacion", panel4);
+
+		getContentPane().add(pestañas);
+	}
+
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Noticias window = new Noticias();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
-	/**
-	 * Create the application.
-	 */
-	public Noticias() {
-		initialize();
-	}
+		Noticias ventana=new Noticias();
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		JButton btnEnviar = new JButton("Enviar");
-		btnEnviar.setBounds(299, 125, 89, 23);
-		frame.getContentPane().add(btnEnviar);
 	}
 
 }
+	 
