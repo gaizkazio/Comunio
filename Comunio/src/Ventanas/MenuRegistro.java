@@ -1,10 +1,13 @@
 package Ventanas;
 
 import java.awt.EventQueue;
+import java.awt.Frame;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
+import Connection.Bd;
 import Connection.Conexion;
 
 import javax.swing.JButton;
@@ -19,8 +22,8 @@ public class MenuRegistro {
 	private JTextField textoUsuario;
 	private JTextField textoContraseña;
 	
-	private static Connection conexion = null;
-    
+	private Connection con =Bd.initBD("ComunioBD");
+    private 	bd_statements bds= new bd_statements();
     
     
 
@@ -65,6 +68,7 @@ public class MenuRegistro {
 		txtUser.setColumns(10);
 		
 		txtContr = new JTextField();
+		txtContr.setEditable(false);
 		txtContr.setText("Contrase\u00F1a");
 		txtContr.setBounds(100, 136, 86, 20);
 		frame.getContentPane().add(txtContr);
@@ -83,14 +87,57 @@ public class MenuRegistro {
 		JButton BotonRegistro = new JButton("Registrar");
 		BotonRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+		
 				
 				
+				
+				bds.insertarValoresUsuario(con,textoUsuario.getText(),textoContraseña.getText());
 			}
 		});
 		BotonRegistro.setBounds(97, 188, 89, 23);
 		frame.getContentPane().add(BotonRegistro);
 		
 		JButton Login = new JButton("Login");
+		Login.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(textoUsuario.getText()==""){
+					System.out.println("Debes escribir un nombre");
+				}
+				else if(textoContraseña.getText()==""){
+					System.out.println("Debes escribir una contraseña");
+				}
+				
+				boolean esCorrecto=false;
+			
+				
+			
+				
+			
+				
+				try {
+					ResultSet sd=bds.seleccionarValores("*", "usuario", con);
+					System.out.println();
+					while(sd.next()){
+						
+						if(sd.getString("USUARIO").equals(textoUsuario.getText()) && sd.getString("CONTRASEÑA").equals(textoContraseña.getText())){
+							
+							System.out.println("Se ha conectado");
+							esCorrecto=true;
+						}
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(esCorrecto){
+				frame.setVisible(false);
+					Frame frame2=new  Noticias();
+					frame2.setVisible(true);
+					
+					
+				}
+			}
+		});
 		Login.setBounds(240, 188, 89, 23);
 		frame.getContentPane().add(Login);
 	}

@@ -3,6 +3,7 @@ package Ventanas;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import Connection.Bd;
 import Entidades.Usuario;
@@ -14,43 +15,64 @@ public class bd_statements {
 	String url="C:\\Users\\gaizka\\Downloads\\Program\\Sqliteman-1.2.2\\ComunioBD";
 	
 	
-	public void insertarValoresUsuario(Usuario usuario,Connection con){
+	public void insertarValoresUsuario(Connection con,String nom,String contraseña){
 		
 		Statement stmt=Bd.usarBD(con);
-		metodoInsert(stmt,"Usuario");
+		String s="INSERT INTO usuario(USUARIO,CONTRASEÑA) VALUES( '"+nom+"' , '"+contraseña+"' )";
 		
-	
+		try{
+			System.out.println(s);
+			stmt.executeUpdate(s);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 		
-		
+		cerrarSTMT(stmt);
 	}
-	public void seleccionarValores(	String valores,String nomTabla,Connection con){
+	public void cerrarST(ResultSet st){
+		try {
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void cerrarSTMT(Statement st){
+		try {
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public ResultSet seleccionarValores(	String valores,String nomTabla,Connection con){
 		Statement stmt=Bd.usarBD(con);
-				pediraBd(valores,"USUARIO",stmt,"USUARIO","CONTRASEÑA");
+		ResultSet st=	pediraBd(valores,"USUARIO",con,"USUARIO","CONTRASEÑA");
 				
-			
+				cerrarSTMT(stmt);
+			return st;
 		
 	}
 	// Metodo query FINALIZADO
-		public void pediraBd(String valores,String nomTabla,Statement stmt,String...columnas){
-			
+		public ResultSet pediraBd(String valores,String nomTabla,Connection con,String...columnas){
+			ResultSet st=null;
+			Statement stmt=Bd.usarBD(con);
 			try{
 				
-				int i=0;
-				ResultSet st =stmt.executeQuery("SELECT "+ valores+" FROM  "+nomTabla+" ") ;
-				for(String columna:columnas){
-				System.out.print(st.getString(columna));
-				if(columnas.length>=i)System.out.print(" ,");
-					i++;
-					
-				}
+		
+				
+				 st =stmt.executeQuery("SELECT "+ valores+" FROM  "+nomTabla+" ") ;
+				
 				
 				
 				
 			}catch(Exception e) {
 				e.printStackTrace();
-			
+				
+				cerrarSTMT(stmt);
 		}
-		
+			
+		return st;
 		
 		}
 	//Metodo insert FINALIZADO
@@ -121,7 +143,7 @@ public class bd_statements {
 			
 			if(respuesta==1){
 				for(int j=0;j<i;j++){
-				String envio="ALTER TABLE "+ nomTabla + " ADD ( "+columnas[j]+" "+valores[j]+" );";
+				String envio="ALTER TABLE "+ nomTabla + " ADD  "+columnas[j]+" "+valores[j]+" ;";
 				try{
 					System.out.println(envio);
 					stmt.executeUpdate(envio);

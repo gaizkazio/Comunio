@@ -1,9 +1,11 @@
 package Ventanas;
 
+import java.awt.EventQueue;
+
 import javax.swing.*;
 
 public class Noticias extends JFrame{
-
+	private JFrame frame;
 	public Noticias(){
 
 		//Parametros asociados a la ventana
@@ -17,10 +19,16 @@ public class Noticias extends JFrame{
 
 		//Creamos el panel y lo añadimos a las pestañas
 		JPanel panel1=new JPanel();
+		
+		JComboBox comboBox = new JComboBox();
+		comboBox.setModel(new DefaultComboBoxModel(new String[] {"m", "n", "kl", "l"}));
+		panel1.add(comboBox);
+//		
 
 		//Componentes del panel1
 		JLabel et_p1=new JLabel("Estas en Noticias");
 		panel1.add(et_p1);
+		
 
 		//Añadimos un nombre de la pestaña y el panel
 		pestañas.addTab("Noticias", panel1);
@@ -54,7 +62,19 @@ public class Noticias extends JFrame{
 
 	public static void main(String[] args) {
 
-		Noticias ventana=new Noticias();
+
+		
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Noticias window = new Noticias();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	
 
 	}
 
