@@ -153,7 +153,7 @@ public class bd_statements {
 				}
 			}else{
 				for(int j=0;j<i;j++){
-					String envio=" ALTER TABLE "+ nomTabla+ " MODIFY ( "+columnas[j]+" "+valores[j]+");";
+					String envio=" ALTER TABLE "+ nomTabla+ " MODIFY ( "+columnas[j]+" "+valores[j]+" );";
 					try{
 						stmt.executeUpdate(envio);
 					}catch(Exception e) {

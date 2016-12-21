@@ -13,8 +13,8 @@ private static Connection con =Bd.initBD("ComunioBD");
 	public static void main(String[]args){
 		bd_statements bds= new bd_statements();
 		bds.seleccionarValores("*", "usuario", con);
-		MenuRegistro r=new MenuRegistro();
-		r.main(args);
+		Bd bd=new Bd();
+		Statement stmt = bd.usarBD(con);
 		
 		
 	}

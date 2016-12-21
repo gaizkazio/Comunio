@@ -4,5 +4,11 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="lib" path="src/lib/sqlite-jdbc-3.14.2.1.jar"/>
 	<classpathentry kind="lib" path="src/lib/src0_82.jar"/>
+	<classpathentry kind="lib" path="libs/filterbuilder.jar"/>
+	<classpathentry kind="lib" path="libs/htmllexer.jar"/>
+	<classpathentry kind="lib" path="libs/htmlparser.jar"/>
+	<classpathentry kind="lib" path="libs/junit.jar"/>
+	<classpathentry kind="lib" path="libs/sax2.jar"/>
+	<classpathentry kind="lib" path="libs/thumbelina.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

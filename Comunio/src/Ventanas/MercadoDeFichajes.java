@@ -19,9 +19,9 @@ import javax.swing.Box;
 import javax.swing.JLabel;
 
 
-public class MercadoDeFichajes {
+public class MercadoDeFichajes extends JPanel{
 
-	private JFrame frame;
+	
 
 	/**
 	 * Launch the application.
@@ -30,8 +30,11 @@ public class MercadoDeFichajes {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MercadoDeFichajes window = new MercadoDeFichajes();
-					window.frame.setVisible(true);
+					JFrame frame = new JFrame();
+					frame.setBounds(100, 100, 450, 300);
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+					MercadoDeFichajes window = new MercadoDeFichajes((JPanel)frame.getContentPane());
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -42,21 +45,19 @@ public class MercadoDeFichajes {
 	/**
 	 * Create the application.
 	 */
-	public MercadoDeFichajes() {
-		initialize();
+	public MercadoDeFichajes(JPanel mercadopanel) {
+		initialize(mercadopanel);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		JPanel panel = new JPanel();
-		frame.getContentPane().add(panel, BorderLayout.CENTER);
-		
+	private void initialize(JPanel mercadopanel) {
+		JPanel panel = this;
+		if(mercadopanel!=null){
+		mercadopanel.setLayout(new BorderLayout());
+		mercadopanel.add(panel, BorderLayout.CENTER);
+		}
 		JMenuItem mntmAlineacion = new JMenuItem("Alineacion");
 		panel.add(mntmAlineacion);
 		

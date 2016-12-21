@@ -24,10 +24,14 @@ import org.htmlparser.lexer.Page;
  * Descomprimir, guardar y enlazar fichero htmlparser.jar
  */
 public class TestWeb {
+    private String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las palmas","leganes","malaga","osasuna","real madrid","real sociedad","sevilla","sporting","valencia","villareal"};
 
 	public static void main(String[] args) {
-		// procesaWeb( "http://www.comuniazo.com/comunio/equipos/alaves" );
-		pruebaDatosJugadoresComuniazo( "http://www.comuniazo.com/comunio/equipos/alaves" );
+//		 procesaWeb( "http://www.comuniazo.com/comunio/equipos/alaves" );
+		String [] a=pruebaDatosJugadoresComuniazo( "http://www.comuniazo.com/comunio/equipos/alaves" );
+		sacarPosiciones("Christian Santos",a);
+		sacarPuntosTotales("Christian Santos",a);
+		sacarPrecio("Christian Santos", a);
 	}
 
 
@@ -60,8 +64,10 @@ public class TestWeb {
 	/** Procesa datos de jugadores comuniazo
 	 * @param dirWe
 	 */
-	public static void pruebaDatosJugadoresComuniazo( String dirWeb ) {
+	public static String[] pruebaDatosJugadoresComuniazo( String dirWeb ) {
 		URL url;
+		String[]result=new String[50];
+		int i=0;
 		try {
 			url = new URL( dirWeb );
 			URLConnection connection = url.openConnection();
@@ -84,17 +90,21 @@ public class TestWeb {
 							n = mLexer.nextNode();
 						}
 						System.out.println( "JUGADOR: " + nombreJug + "  " + datosJugador );
+						result[i]="JUGADOR: " + nombreJug + "  " + datosJugador;
+						i++;
 					} else {
 						// System.out.println( "[" + t.getTagName() + "] " + n.getText() );
 						n = mLexer.nextNode();
 					}
 				} else {
 					n = mLexer.nextNode();
+					
 				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return result;
 	}
 
 // (*)
@@ -145,6 +155,150 @@ Tag SPAN -> /span
 Tag TD -> /td
 Tag TD -> td class="aleft"
 	 */
-
+	public static String sacarNombre(int a,String[]jugadores){
+		String nom="";
+		int posNom=0;
+		for(int j=0;j<jugadores.length;j++){
+			if(jugadores[a].charAt(j)=="[".charAt(0)){
+				posNom=j-2;
+				j=jugadores[a].length();
+			}
+		}
+		nom=jugadores[a].substring(9, posNom);
+		return nom;
+	}
+	public static String sacarNombre(String jugadores){
+		String nom="";
+		int posNom=0;
+		for(int j=0;j<jugadores.length();j++){
+			if(jugadores.charAt(j)=="[".charAt(0)){
+				posNom=j-2;
+				j=jugadores.length();
+			}
+		}
+		nom=jugadores.substring(9, posNom);
+		return nom;
+	}
+	public static String sacarPosiciones(String nombre,String[]equipo){
+		String nombreI;
+		String posicion="";
+		int posNom=0;
+		int posPos=0;
+		int cont =0;
+		for(int i=1;i<equipo.length;i++){
+			for(int j=0;j<equipo[i].length();j++){
+				if(equipo[i].charAt(j)=="[".charAt(0)){
+					posNom=j-2;
+					j=equipo[i].length();
+				}
+			}
+			nombreI=equipo[i].substring(9,posNom);
+			if(nombreI.equals(nombre)){
+				 cont =0;
+				for(int l=0;l<equipo[i].length();l++){
+					
+					if(equipo[i].charAt(l)==",".charAt(0)){
+						if(cont<14)
+						cont++;
+					}
+					if(cont==14){
+						System.out.print("La posicion de "+ nombre +" es: ");
+						posPos=l+2;
+						posicion=equipo[i].substring(posPos, posPos+2);
+						System.out.println(posicion);
+						l=equipo[i].length();
+					}
+				}
+				i=equipo.length;	}
+		}
+		return posicion;
+	}
+	public static String sacarPuntosTotales(String nombre,String[]equipo){
+		String nombreI;
+		String posicion="";
+		int posNom=0;
+		int posPos=0;
+		int cont =0;
+		for(int i=1;i<equipo.length;i++){
+			for(int j=0;j<equipo[i].length();j++){
+				if(equipo[i].charAt(j)=="[".charAt(0)){
+					posNom=j-2;
+					j=equipo[i].length();
+				}
+			}
+			nombreI=equipo[i].substring(9,posNom);
+			if(nombreI.equals(nombre)){
+				 cont =0;
+				for(int l=0;l<equipo[i].length();l++){
+					if(equipo[i].charAt(l)==",".charAt(0)){
+						if(cont<1)
+						cont++;
+					}
+					if(cont==1){
+						System.out.print("La puntuacion de "+ nombre +" es: ");
+						posNom=l;
+						posicion=equipo[i].substring(posNom-2, posNom);
+						System.out.println(posicion);
+						l=equipo[i].length();	
+					}
+				}
+				i=equipo.length;	}
+		
+		}
+		
+		
+		
+		return posicion;
+	}
+	
+	public static String sacarPrecio(String nombre,String[]equipo){
+		String nombreI;
+		String posicion="";
+		int cont2=0;
+		int posNom=0;
+		int posPre=0;
+		int cont =0;
+		for(int i=1;i<equipo.length;i++){
+			for(int j=0;j<equipo[i].length();j++){
+				if(equipo[i].charAt(j)=="[".charAt(0)){
+					posNom=j-2;
+					j=equipo[i].length();
+				}
+			}
+			
+			nombreI=equipo[i].substring(9,posNom);
+			
+			if(nombreI.equals(nombre)){
+				 cont =0;
+				for(int l=0;l<equipo[i].length();l++){
+					if(equipo[i].charAt(l)==",".charAt(0)){
+						if(cont<4)
+						cont++;
+					}
+					else if(cont==3 &&cont2==0 ){
+						posPre=l;
+						cont2++;
+					}
+					 if(cont==4){
+						System.out.print("El precio de "+ nombre +" es: ");
+						posNom=l;
+						posicion=equipo[i].substring(posPre+1, posNom);
+						System.out.println(posicion);
+						l=equipo[i].length();	
+					}
+				}
+				i=equipo.length;	}
+		
+		}
+		
+		
+		
+		return posicion;
+	
+		
+	}
+	
+	
 }
-TestWeb.java
+
+
