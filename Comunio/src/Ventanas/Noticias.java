@@ -3,6 +3,8 @@ package Ventanas;
 import java.awt.EventQueue;
 
 import javax.swing.*;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -41,21 +43,16 @@ public class Noticias extends JFrame{
 						//Realizamos lo mismo con el resto
 						
 						JPanel panel2= new MercadoDeFichajes(null);
-						
+						panel2.setLayout(null);
 								//Componentes del panel2
-								JLabel et_p2=new JLabel("Estas en el Mercado de Fichajes");
-								panel2.add(et_p2);
+								
 								
 								pestañas.addTab("Mercado", panel2);
 								
 										//Creamos el panel y lo añadimos a las pestañas
 										JPanel panel1=new JPanel();
 										panel1.setLayout(null);
-										
-			
-										
-										
-//		
+									
 
 										//Componentes del panel1
 										JLabel et_p1=new JLabel("Estas en Noticias");
@@ -76,7 +73,7 @@ public class Noticias extends JFrame{
 										list.setBounds(540, 107, 302, 226);
 										list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
 										DefaultListModel modelo = new DefaultListModel();
-										panel1.add(list);
+										
 										
 										JScrollPane scrollLista = new JScrollPane();
 										scrollLista.setBounds(540, 200, 305, 150);

@@ -24,7 +24,7 @@ public class MenuRegistro {
 	private JTextField textoUsuario;
 	private JTextField textoContraseña;
 	
-	private Connection con =Bd.initBD("ComunioBD");
+	private static Connection con =Bd.initBD("ComunioBD");
     private 	bd_statements bds= new bd_statements();
     private Usuario usuario;
     private static String equipo="";
@@ -151,7 +151,7 @@ public class MenuRegistro {
 						if(cont==0){
 							
 							while(contJug<15){
-							String jugador=	generarJugadores();
+							String jugador=	generarJugador();
 							String nombre=tw.sacarNombre( jugador);
 							if(tw.sacarPosiciones(nombre, equipos)=="PT" && contPT<PT){
 								for(int i=0;i<alineacion.length;i++){
@@ -216,7 +216,7 @@ public class MenuRegistro {
 		Login.setBounds(240, 188, 89, 23);
 		frame.getContentPane().add(Login);
 	}
-	public static String generarJugadores(){
+	public static String generarJugador(){
 		int comas=0;
 		
 		int a = (int)(Math.random()*20);
@@ -225,17 +225,20 @@ public class MenuRegistro {
 		 equipo=equipos[a];
 		String [] jugadores=tw.pruebaDatosJugadoresComuniazo("http://www.comuniazo.com/comunio/equipos/"+equipo);
 		
-		for(int i=0;i<jugadores.length && jugadores[i]!=null;i++){
-			
-			for(int j=0;j<jugadores[i].length();j++){
-				if(jugadores[i].charAt(j)==",".charAt(0) && !(jugadores[i].endsWith("[]"))){
-					comas++;
+		 ResultSet st;
+		 Statement stmt=Bd.usarBD(con);
+			try{
+				 st =stmt.executeQuery("SELECT CONT(*) FROM jugador WHERE equipo= "+equipo) ;
+				while(st.next()){
+					cont++;
 				}
-			}
-			if(comas>0)
-			cont++;
-			comas=0;
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				
 		}
+		
+		
 		System.out.println(cont);
 		int b=1+(int)(Math.random()*(cont-1));
 		System.out.println(b);

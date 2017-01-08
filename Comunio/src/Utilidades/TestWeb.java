@@ -4,6 +4,10 @@ package Utilidades;
 // Imports relacionados con el proceso
 import java.net.URL;
 import java.net.URLConnection;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 // Imports de librería externa  -  https://sourceforge.net/projects/htmlparser/
@@ -13,6 +17,9 @@ import org.htmlparser.Text;
 import org.htmlparser.lexer.Lexer;
 import org.htmlparser.lexer.Page;
 
+import Connection.Bd;
+import Entidades.Jugador;
+import Ventanas.MenuRegistro;
 
 /** 
  * Clase de test de una dirección web para ver su contenido
@@ -24,14 +31,55 @@ import org.htmlparser.lexer.Page;
  * Descomprimir, guardar y enlazar fichero htmlparser.jar
  */
 public class TestWeb {
-    private String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las palmas","leganes","malaga","osasuna","real madrid","real sociedad","sevilla","sporting","valencia","villareal"};
-
+    private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las-palmas","leganes","malaga","osasuna","real-madrid","real-sociedad","sevilla","sporting","valencia","villarreal"};
+    private static String Elequipo="";
+    static Connection con=Bd.initBD("ComunioBD");
+    static TestWeb tw= new TestWeb();
 	public static void main(String[] args) {
-//		 procesaWeb( "http://www.comuniazo.com/comunio/equipos/alaves" );
-		String [] a=pruebaDatosJugadoresComuniazo( "http://www.comuniazo.com/comunio/equipos/alaves" );
-		sacarPosiciones("Christian Santos",a);
-		sacarPuntosTotales("Christian Santos",a);
-		sacarPrecio("Christian Santos", a);
+		
+		generarJugador();
+	}
+	public static void eliminarCosas(){
+		
+		Statement st=Bd.usarBD(con);
+		try {
+			st.executeUpdate("DELETE FROM jugador;");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public static void meterJugadoresEnBd(String equipos){
+		
+		
+		Statement st=Bd.usarBD(con);
+		String[] jugadores= pruebaDatosJugadoresComuniazo("http://www.comuniazo.com/comunio/equipos/"+equipos);
+		int comas=0;
+		int cont=0;
+		//contador de jugadores de ese equipo
+		for(int i=0;i<jugadores.length;i++){
+			if(jugadores[i]!=null)
+			for(int j=0;j<jugadores[i].length();j++){
+				if(jugadores[i].charAt(j)==",".charAt(0) && !(jugadores[i].endsWith("[]"))){
+					comas++;
+				}
+			}
+			if(comas>0)
+			cont++;
+			comas=0;
+		}
+		for(int i=0;i<cont;i++){
+			
+			String nombre=tw.sacarNombre(i+1, jugadores);
+			String jugador="INSERT INTO jugador(nombre,puntuacionAnterior,puntuacionTotal,precio,equipo,dueño) VALUES ( '"+nombre+"','"+tw.sacarPuntosAnterior(nombre, jugadores)+"','"+tw.sacarPuntosTotales(nombre, jugadores)+"','"+tw.sacarPrecio(nombre, jugadores)+"','"+equipos+"','computer');";
+			try {
+				st.executeUpdate(jugador);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 
@@ -89,6 +137,7 @@ public class TestWeb {
 								datosJugador.add( n.getText() );
 							n = mLexer.nextNode();
 						}
+						
 						System.out.println( "JUGADOR: " + nombreJug + "  " + datosJugador );
 						result[i]="JUGADOR: " + nombreJug + "  " + datosJugador;
 						i++;
@@ -104,8 +153,13 @@ public class TestWeb {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		result[0]=null;
+		
+		
+		
+		
 		return result;
-	}
+}
 
 // (*)
 /* Ejemplo de volcado de jugadores comunio
@@ -158,12 +212,15 @@ Tag TD -> td class="aleft"
 	public static String sacarNombre(int a,String[]jugadores){
 		String nom="";
 		int posNom=0;
-		for(int j=0;j<jugadores.length;j++){
+		
+		if(a==0)a=1;
+		for(int j=0;j<jugadores[a].length();j++){
 			if(jugadores[a].charAt(j)=="[".charAt(0)){
 				posNom=j-2;
 				j=jugadores[a].length();
 			}
 		}
+		System.out.println("el string es: "+jugadores[a]);
 		nom=jugadores[a].substring(9, posNom);
 		return nom;
 	}
@@ -179,13 +236,14 @@ Tag TD -> td class="aleft"
 		nom=jugadores.substring(9, posNom);
 		return nom;
 	}
+	
 	public static String sacarPosiciones(String nombre,String[]equipo){
 		String nombreI;
 		String posicion="";
 		int posNom=0;
 		int posPos=0;
 		int cont =0;
-		for(int i=1;i<equipo.length;i++){
+		for(int i=1;i<=equipo.length;i++){
 			for(int j=0;j<equipo[i].length();j++){
 				if(equipo[i].charAt(j)=="[".charAt(0)){
 					posNom=j-2;
@@ -213,15 +271,61 @@ Tag TD -> td class="aleft"
 		}
 		return posicion;
 	}
-	public static String sacarPuntosTotales(String nombre,String[]equipo){
+	public static Jugador generarJugador(){
+		int comas=0;
+		int cont2=0;
+		int j=0;
+		String nomJugador=null;
+		String[]jugadores=null;
+		int a = (int)(Math.random()*20);
+		System.out.println(a);
+		int cont=0;
+		Elequipo=equipos[a];
+		
+		 ResultSet st = null;
+		 Statement stmt=Bd.usarBD(con);
+			try{
+				 st =stmt.executeQuery("SELECT COUNT(*) FROM jugador WHERE equipo='"+Elequipo+"'") ;
+				
+				
+			}catch(Exception e) {
+				e.printStackTrace();
+				
+		}
+		
+		
+		System.out.println(cont);
+		int b=1+(int)(Math.random()*(cont-1));
+		System.out.println(b);
+		try {
+			String h=st.getString(b);
+			nomJugador=tw.sacarNombre(st.getString(b));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		System.out.println(nomJugador);
+		Jugador jugador=new Jugador(nomJugador,tw.sacarPrecio(nomJugador,jugadores),tw.sacarPuntosTotales(nomJugador, jugadores),tw.sacarPosiciones(nomJugador,jugadores),Elequipo,"computer");
+		return jugador;
+	}
+	public static String sacarPuntosAnterior(String nombre,String[]equipo){
 		String nombreI;
+		int r=0;
+		int s=0;
+		int cont13=0;
+		int cont12=0;
+		int contador=0;
+		int posicion2=0;
 		String posicion="";
+		String pospos="";
 		int posNom=0;
-		int posPos=0;
+		int p=0;
 		int cont =0;
 		for(int i=1;i<equipo.length;i++){
 			for(int j=0;j<equipo[i].length();j++){
 				if(equipo[i].charAt(j)=="[".charAt(0)){
+					p=j;
 					posNom=j-2;
 					j=equipo[i].length();
 				}
@@ -231,13 +335,76 @@ Tag TD -> td class="aleft"
 				 cont =0;
 				for(int l=0;l<equipo[i].length();l++){
 					if(equipo[i].charAt(l)==",".charAt(0)){
-						if(cont<1)
+						cont++;
+					}
+					if(cont==1 && contador==0){
+						contador++;
+						posNom=l;
+						posicion=equipo[i].substring(p+1, posNom);
+						System.out.println(posicion);
+							
+					}
+					if(cont==12 && cont12==0){
+						cont12++;
+						posicion2=l;
+					}
+					if(cont==13&& cont13==0){
+						cont13++;
+						posNom=l;
+						pospos=equipo[i].substring(posicion2+2, posNom);
+						
+						System.out.println(posicion);
+						System.out.println(pospos);
+						
+						if(!posicion.equals("-"))
+						 r=Integer.parseInt(posicion);
+						if(!pospos.equals("-"))
+						 s =Integer.parseInt(pospos);
+						if(!posicion.equals("-") && !pospos.equals("-"))
+						posicion=String.valueOf(r-s);
+						
+						posicion=String.valueOf(posicion);
+						
+						
+						System.out.println("La puntuacion anterior de "+nombre+" es: "+posicion);
+					}
+				}
+				i=equipo.length;	}
+			
+		
+		}
+		
+		
+		
+		return posicion;
+	}
+	public static String sacarPuntosTotales(String nombre,String[]equipo){
+		String nombreI;
+		String posicion="";
+		int posNom=0;
+		int p=0;
+		int cont =0;
+		for(int i=1;i<equipo.length;i++){
+			for(int j=0;j<equipo[i].length();j++){
+				if(equipo[i].charAt(j)=="[".charAt(0)){
+					p=j;
+					posNom=j-2;
+					j=equipo[i].length();
+				}
+			}
+			
+			nombreI=equipo[i].substring(9,posNom);
+			if(nombreI.equals(nombre)){
+				 cont =0;
+				for(int l=0;l<equipo[i].length();l++){
+					if(equipo[i].charAt(l)==",".charAt(0)){
+						
 						cont++;
 					}
 					if(cont==1){
 						System.out.print("La puntuacion de "+ nombre +" es: ");
 						posNom=l;
-						posicion=equipo[i].substring(posNom-2, posNom);
+						posicion=equipo[i].substring(p+1,posNom);
 						System.out.println(posicion);
 						l=equipo[i].length();	
 					}

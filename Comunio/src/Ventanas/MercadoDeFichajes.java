@@ -4,6 +4,12 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+
+import Entidades.Jugador;
+import Utilidades.TestWeb;
+
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
@@ -14,14 +20,21 @@ import java.awt.Panel;
 import java.awt.List;
 import java.awt.ScrollPane;
 import java.awt.TextArea;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Component;
 import javax.swing.Box;
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTextField;
 
 
 public class MercadoDeFichajes extends JPanel{
-
-	
+	private JTextField txtEstasEnMercado;
+	DefaultListModel<String> modelo=new DefaultListModel();;
+	private JList lista=new JList();
 
 	/**
 	 * Launch the application.
@@ -47,34 +60,54 @@ public class MercadoDeFichajes extends JPanel{
 	 */
 	public MercadoDeFichajes(JPanel mercadopanel) {
 		initialize(mercadopanel);
+		lista.setModel(modelo);
+		
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize(JPanel mercadopanel) {
+		
 		JPanel panel = this;
+		setLayout(null);
 		if(mercadopanel!=null){
-		mercadopanel.setLayout(new BorderLayout());
-		mercadopanel.add(panel, BorderLayout.CENTER);
-		}
-		JMenuItem mntmAlineacion = new JMenuItem("Alineacion");
-		panel.add(mntmAlineacion);
+			mercadopanel.setLayout(new BorderLayout());
+			mercadopanel.add(panel, BorderLayout.CENTER);
+			}
 		
-		JMenuItem mntmMercado = new JMenuItem("Mercado");
-		panel.add(mntmMercado);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(390, 100, 605, 450);
+		add(scrollPane);
 		
-		JMenuItem mntmPuntuacion = new JMenuItem("Puntuacion");
-		panel.add(mntmPuntuacion);
+		Jugador jugador=new Jugador();
+		jugador=TestWeb.generarJugador();
+		agregarALista("Nombre: "+ jugador.getNombre()+" precio: "+jugador.getPrecio()+" equipo: "+jugador.getEquipo()+ " puntosTotal: "+jugador.getPuntuacioTotal());
 		
-		JMenuItem mntmNoticias = new JMenuItem("Noticias");
-		panel.add(mntmNoticias);
+		scrollPane.setViewportView(lista);
+	
+		txtEstasEnMercado = new JTextField();
+		txtEstasEnMercado.setEditable(false);
+		txtEstasEnMercado.setText("Estas en mercado de fichajes");
+		txtEstasEnMercado.setBounds(540, 30, 302, 30);
+		add(txtEstasEnMercado);
+		txtEstasEnMercado.setColumns(10);
 		
-		TextArea textArea = new TextArea();
-		panel.add(textArea);
 		
-		JMenuBar menuBar = new JMenuBar();
-		panel.add(menuBar);
+		
+		
+		
 	}
-
+	
+	
+	public void agregarALista(String jugador){	
+		modelo.addElement(jugador);
+		
+	}
+	public void jugadoresEnMercado(){
+		
+		
+	}
+	
+	
 }

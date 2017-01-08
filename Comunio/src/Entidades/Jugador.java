@@ -1,9 +1,19 @@
 package Entidades;
 
+import java.awt.Component;
+
 public class Jugador {
 	private String nombre,precio,puntuacioTotal,posicion,equipo,dueño;
 
 	public Jugador(String nombre, String precio, String puntuacioTotal, String posicion, String equipo, String dueño) {
+		this.nombre = nombre;
+		this.precio = precio;
+		this.puntuacioTotal = puntuacioTotal;
+		this.posicion = posicion;
+		this.equipo = equipo;
+		this.dueño=dueño;
+	}
+	public Jugador() {
 		this.nombre = nombre;
 		this.precio = precio;
 		this.puntuacioTotal = puntuacioTotal;
