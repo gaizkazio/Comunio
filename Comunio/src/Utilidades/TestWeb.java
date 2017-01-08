@@ -36,7 +36,7 @@ public class TestWeb {
     static Connection con=Bd.initBD("ComunioBD");
     static TestWeb tw= new TestWeb();
 	public static void main(String[] args) {
-		
+	
 		generarJugador();
 	}
 	public static void eliminarCosas(){
@@ -276,34 +276,43 @@ Tag TD -> td class="aleft"
 		int cont2=0;
 		int j=0;
 		String nomJugador=null;
-		String[]jugadores=null;
+		String[]jugadores = new String[50];
 		int a = (int)(Math.random()*20);
 		System.out.println(a);
 		int cont=0;
 		Elequipo=equipos[a];
-		
+		System.out.println(Elequipo);
 		 ResultSet st = null;
+		 ResultSet stt=null;
 		 Statement stmt=Bd.usarBD(con);
+		 Statement stmtt=Bd.usarBD(con);
 			try{
 				 st =stmt.executeQuery("SELECT COUNT(*) FROM jugador WHERE equipo='"+Elequipo+"'") ;
-				
-				
+				cont=Integer.parseInt(st.getString(1));
+				if(cont>35){
+					cont/=2;
+				}
+				jugadores = new String[cont];
+				stt=stmtt.executeQuery("SELECT * FROM jugador WHERE equipo='"+Elequipo+"'");
+				while(stt.next() && cont2<=cont){
+					System.out.println("JUGADOR: "+stt.getString(1)+"  ["+stt.getString(3)+", 4,2, "+stt.getString(4)+", 2,  , 6,  , 2,  , 10,  , 2,  ]");
+					jugadores[cont2]="JUGADOR: "+stt.getString(1)+"  ["+stt.getString(3)+", 4,2, "+stt.getString(4)+", 2,  , 6,  , 2,  , 10,  , 2,  ]";
+					cont2++;
+				}
 			}catch(Exception e) {
 				e.printStackTrace();
 				
 		}
-		
+		for(int i=0;i<jugadores.length;i++){
+			System.out.println(jugadores[i]);
+		}
 		
 		System.out.println(cont);
 		int b=1+(int)(Math.random()*(cont-1));
 		System.out.println(b);
-		try {
-			String h=st.getString(b);
-			nomJugador=tw.sacarNombre(st.getString(b));
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+			
+			nomJugador=tw.sacarNombre(jugadores[b]);
 		
 		System.out.println(nomJugador);
 		Jugador jugador=new Jugador(nomJugador,tw.sacarPrecio(nomJugador,jugadores),tw.sacarPuntosTotales(nomJugador, jugadores),tw.sacarPosiciones(nomJugador,jugadores),Elequipo,"computer");
