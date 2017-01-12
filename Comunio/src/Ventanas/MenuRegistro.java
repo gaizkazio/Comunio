@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 import Connection.Bd;
 import Connection.Conexion;
+import Entidades.Jugador;
 import Entidades.Usuario;
 import Utilidades.TestWeb;
 
@@ -24,9 +25,9 @@ public class MenuRegistro {
 	private JTextField textoUsuario;
 	private JTextField textoContraseña;
 	
-	private static Connection con =Bd.initBD("ComunioBD");
-    private 	bd_statements bds= new bd_statements();
-    private Usuario usuario;
+	
+    private bd_statements bds= new bd_statements();
+    private static Usuario usuario=new Usuario("gaizka","gaizka");
     private static String equipo="";
     private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las palmas","leganes","malaga","osasuna","real madrid","real sociedad","sevilla","sporting","valencia","villareal"};
     private final int PT=2;
@@ -34,16 +35,19 @@ public class MenuRegistro {
     private final int MC=5;
     private final int DL=3;
     private String[] alineacion;
-    private static TestWeb tw = new TestWeb();
+    
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+    public static String getName(){
+    	return usuario.getNombre();
+    }
+	public static void main(String[] args,Connection con) {
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MenuRegistro window = new MenuRegistro();
+					MenuRegistro window = new MenuRegistro(con);
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -55,14 +59,16 @@ public class MenuRegistro {
 	/**
 	 * Create the application.
 	 */
-	public MenuRegistro() {
-		initialize();
+	public MenuRegistro(Connection con) {
+		initialize(con);
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	private void initialize(Connection con) {
+		TestWeb tw=new TestWeb();
+		tw.eliminarCosas(con);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -96,9 +102,6 @@ public class MenuRegistro {
 		BotonRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 		
-				
-				
-				
 				bds.insertarValoresUsuario(con,textoUsuario.getText(),textoContraseña.getText());
 			}
 		});
@@ -126,9 +129,12 @@ public class MenuRegistro {
 							usuario.setNombre(textoUsuario.getText());
 							usuario.setContraseña(textoContraseña.getText());
 							System.out.println("Se ha conectado");
+							 usuario= new Usuario(textoUsuario.getText(),"");
+							
 							esCorrecto=true;
 						}
 					}
+					sd.close();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -140,73 +146,12 @@ public class MenuRegistro {
 					int contDF=0;
 					int contMC=0;
 					int contDL=0;
-					ResultSet sd=bds.seleccionarValores("*", "jugadores", con);
+					ResultSet rs=bds.seleccionarValores("*", "jugador", con);
 					System.out.println();
-					try {
-						while(sd.next()){
-							if(sd.getString("dueño").equals(usuario.getNombre())){
-								cont++;
-							}
-						}
-						if(cont==0){
-							
-							while(contJug<15){
-							String jugador=	generarJugador();
-							String nombre=tw.sacarNombre( jugador);
-							if(tw.sacarPosiciones(nombre, equipos)=="PT" && contPT<PT){
-								for(int i=0;i<alineacion.length;i++){
-									if(alineacion[i]==null){
-										alineacion[i]=jugador;
-										i=alineacion.length;
-										contPT++;
-										contJug++;
-									}
-								}
-							}
-							
-							if(tw.sacarPosiciones(nombre, equipos)=="DF" && contDF<DF){
-								for(int i=0;i<alineacion.length;i++){
-									if(alineacion[i]==null){
-										alineacion[i]=jugador;
-										i=alineacion.length;
-										contDF++;
-										contJug++;
-									}
-								}
-							}
-							
-							if(tw.sacarPosiciones(nombre, equipos)=="MC" && contMC<MC){
-								for(int i=0;i<alineacion.length;i++){
-									if(alineacion[i]==null){
-										alineacion[i]=jugador;
-										i=alineacion.length;
-										contMC++;
-										contJug++;
-									}
-								}
-							}
-							
-							if(tw.sacarPosiciones(nombre, equipos)=="DL" && contDL<DL){
-								for(int i=0;i<alineacion.length;i++){
-									if(alineacion[i]==null){
-										alineacion[i]=jugador;
-										i=alineacion.length;
-										contDL++;
-										contJug++;
-									}
-								}
-							}
-							
-							}
-							
-						}
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					
 					
 				frame.setVisible(false);
-					Frame frame2=new  Noticias();
+					Frame frame2=new  Noticias(con);
 					frame2.setVisible(true);
 					
 					
@@ -215,36 +160,6 @@ public class MenuRegistro {
 		});
 		Login.setBounds(240, 188, 89, 23);
 		frame.getContentPane().add(Login);
-	}
-	public static String generarJugador(){
-		int comas=0;
-		
-		int a = (int)(Math.random()*20);
-		System.out.println(a);
-		int cont=0;
-		 equipo=equipos[a];
-		String [] jugadores=tw.pruebaDatosJugadoresComuniazo("http://www.comuniazo.com/comunio/equipos/"+equipo);
-		
-		 ResultSet st;
-		 Statement stmt=Bd.usarBD(con);
-			try{
-				 st =stmt.executeQuery("SELECT CONT(*) FROM jugador WHERE equipo= "+equipo) ;
-				while(st.next()){
-					cont++;
-				}
-				
-			}catch(Exception e) {
-				e.printStackTrace();
-				
-		}
-		
-		
-		System.out.println(cont);
-		int b=1+(int)(Math.random()*(cont-1));
-		System.out.println(b);
-		String nomJugador=tw.sacarNombre(b, jugadores);
-		System.out.println(nomJugador);
-		return jugadores[b];
 	}
 	
 }

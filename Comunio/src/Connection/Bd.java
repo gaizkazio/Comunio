@@ -76,9 +76,9 @@ public class Bd {
 		 * @param con	Conexión abierta de la BD
 		 * @param st	Sentencia abierta de la BD
 		 */
-		public static void cerrarBD( Connection con, Statement st ) {
+		public static void cerrarBD( Connection con) {
 			try {
-				if (st!=null) st.close();
+				
 				if (con!=null) con.close();
 				log( Level.INFO, "Cierre de base de datos", null );
 			} catch (SQLException e) {

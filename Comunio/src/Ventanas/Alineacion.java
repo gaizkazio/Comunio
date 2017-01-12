@@ -148,20 +148,6 @@ public class Alineacion {
 		btnNewButton.setBounds(321, 227, 89, 23);
 		frame.getContentPane().add(btnNewButton);
 		
-		JMenuItem mntmMercado = new JMenuItem("Mercado");
-		mntmMercado.setBounds(-21, -1, 129, 22);
-		frame.getContentPane().add(mntmMercado);
 		
-		JMenuItem mntmAlineacion = new JMenuItem("Alineacion");
-		mntmAlineacion.setBounds(61, 0, 129, 22);
-		frame.getContentPane().add(mntmAlineacion);
-		
-		JMenuItem mntmPuntuacion = new JMenuItem("Puntuacion");
-		mntmPuntuacion.setBounds(152, -1, 129, 22);
-		frame.getContentPane().add(mntmPuntuacion);
-		
-		JMenuItem mntmNoticias = new JMenuItem("Noticias");
-		mntmNoticias.setBounds(293, -1, 129, 22);
-		frame.getContentPane().add(mntmNoticias);
 	}
 }

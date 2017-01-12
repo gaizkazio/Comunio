@@ -33,23 +33,44 @@ import Ventanas.MenuRegistro;
 public class TestWeb {
     private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las-palmas","leganes","malaga","osasuna","real-madrid","real-sociedad","sevilla","sporting","valencia","villarreal"};
     private static String Elequipo="";
-    static Connection con=Bd.initBD("ComunioBD");
-    static TestWeb tw= new TestWeb();
-	public static void main(String[] args) {
+    
+    
+	public static void main(String[] args,Connection con) {
+	eliminarCosas(con);
 	
-		generarJugador();
 	}
-	public static void eliminarCosas(){
+	public static void jugadoresEnMercado(Connection con){
+		Statement stmt=Bd.usarBD(con);
+		for(int i=0;i<10;i++){
+			System.out.println("metiendo jugadores");
+			Jugador jugadoraBd=TestWeb.generarJugador(con);
+			String jugadoraBD="INSERT INTO mercado(nombre,puntuacionTotal,precio) VALUES ( '"+jugadoraBd.getNombre()+"','"+jugadoraBd.getPuntuacioTotal()+"','"+jugadoraBd.getPrecio()+"');";	
+		System.out.println("m");
+			try {
+			Thread.sleep(10);
+			stmt.executeUpdate(jugadoraBD);
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		
+	}
+	public static void eliminarCosas(Connection con){
 		
 		Statement st=Bd.usarBD(con);
 		try {
-			st.executeUpdate("DELETE FROM jugador;");
+			st.executeUpdate("DELETE FROM oferta;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	public static void meterJugadoresEnBd(String equipos){
+	public static void meterJugadoresEnBd(String equipos,Connection con){
 		
 		
 		Statement st=Bd.usarBD(con);
@@ -70,8 +91,8 @@ public class TestWeb {
 		}
 		for(int i=0;i<cont;i++){
 			
-			String nombre=tw.sacarNombre(i+1, jugadores);
-			String jugador="INSERT INTO jugador(nombre,puntuacionAnterior,puntuacionTotal,precio,equipo,dueño) VALUES ( '"+nombre+"','"+tw.sacarPuntosAnterior(nombre, jugadores)+"','"+tw.sacarPuntosTotales(nombre, jugadores)+"','"+tw.sacarPrecio(nombre, jugadores)+"','"+equipos+"','computer');";
+			String nombre=sacarNombre(i+1, jugadores);
+			String jugador="INSERT INTO jugador(nombre,puntuacionAnterior,puntuacionTotal,precio,equipo,dueño) VALUES ( '"+nombre+"','"+sacarPuntosAnterior(nombre, jugadores)+"','"+sacarPuntosTotales(nombre, jugadores)+"','"+sacarPrecio(nombre, jugadores)+"','"+equipos+"','computer');";
 			try {
 				st.executeUpdate(jugador);
 			} catch (SQLException e) {
@@ -271,7 +292,7 @@ Tag TD -> td class="aleft"
 		}
 		return posicion;
 	}
-	public static Jugador generarJugador(){
+	public static Jugador generarJugador(Connection conn){
 		int comas=0;
 		int cont2=0;
 		int j=0;
@@ -284,8 +305,8 @@ Tag TD -> td class="aleft"
 		System.out.println(Elequipo);
 		 ResultSet st = null;
 		 ResultSet stt=null;
-		 Statement stmt=Bd.usarBD(con);
-		 Statement stmtt=Bd.usarBD(con);
+		 Statement stmt=Bd.usarBD(conn);
+		 Statement stmtt=Bd.usarBD(conn);
 			try{
 				 st =stmt.executeQuery("SELECT COUNT(*) FROM jugador WHERE equipo='"+Elequipo+"'") ;
 				cont=Integer.parseInt(st.getString(1));
@@ -295,7 +316,7 @@ Tag TD -> td class="aleft"
 				jugadores = new String[cont];
 				stt=stmtt.executeQuery("SELECT * FROM jugador WHERE equipo='"+Elequipo+"'");
 				while(stt.next() && cont2<=cont){
-					System.out.println("JUGADOR: "+stt.getString(1)+"  ["+stt.getString(3)+", 4,2, "+stt.getString(4)+", 2,  , 6,  , 2,  , 10,  , 2,  ]");
+					
 					jugadores[cont2]="JUGADOR: "+stt.getString(1)+"  ["+stt.getString(3)+", 4,2, "+stt.getString(4)+", 2,  , 6,  , 2,  , 10,  , 2,  ]";
 					cont2++;
 				}
@@ -312,10 +333,10 @@ Tag TD -> td class="aleft"
 		System.out.println(b);
 		
 			
-			nomJugador=tw.sacarNombre(jugadores[b]);
+			nomJugador=sacarNombre(jugadores[b]);
 		
 		System.out.println(nomJugador);
-		Jugador jugador=new Jugador(nomJugador,tw.sacarPrecio(nomJugador,jugadores),tw.sacarPuntosTotales(nomJugador, jugadores),tw.sacarPosiciones(nomJugador,jugadores),Elequipo,"computer");
+		Jugador jugador=new Jugador(nomJugador,sacarPrecio(nomJugador,jugadores),sacarPuntosTotales(nomJugador, jugadores),sacarPosiciones(nomJugador,jugadores),Elequipo,"computer");
 		return jugador;
 	}
 	public static String sacarPuntosAnterior(String nombre,String[]equipo){

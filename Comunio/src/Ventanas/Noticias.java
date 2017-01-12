@@ -7,11 +7,12 @@ import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.awt.event.ActionEvent;
 
 public class Noticias extends JFrame{
 	private JTextField textField;
-	public Noticias(){
+	public Noticias(Connection con){
 
 		//Parametros asociados a la ventana
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -42,7 +43,7 @@ public class Noticias extends JFrame{
 				
 						//Realizamos lo mismo con el resto
 						
-						JPanel panel2= new MercadoDeFichajes(null);
+						JPanel panel2= new MercadoDeFichajes(null,con);
 						panel2.setLayout(null);
 								//Componentes del panel2
 								
@@ -95,14 +96,14 @@ public class Noticias extends JFrame{
 										
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args,Connection con) {
 
 
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Noticias window = new Noticias();
+					Noticias window = new Noticias(con);
 					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

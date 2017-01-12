@@ -12,7 +12,7 @@ import javax.swing.JTextField;
 
 public class Conexion {
 Connection connect;
-String url="C:\\Users\\gaizka\\Downloads\\Program\\Sqliteman-1.2.2\\ComunioBD";
+String url="C:\\Users\\gaizka\\Downloads\\Program\\ComunioBD";
 	
 	public void connect(){
 	 try {

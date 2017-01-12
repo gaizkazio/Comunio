@@ -11,8 +11,7 @@ import Connection.Conexion;
 import Utilidades.Utilidades;;
 
 public class bd_statements {
-	Connection conn =null;
-	String url="C:\\Users\\gaizka\\Downloads\\Program\\Sqliteman-1.2.2\\ComunioBD";
+	
 	
 	
 	public void insertarValoresUsuario(Connection con,String nom,String contraseña){
@@ -47,24 +46,18 @@ public class bd_statements {
 	}
 	public ResultSet seleccionarValores(	String valores,String nomTabla,Connection con){
 		Statement stmt=Bd.usarBD(con);
-		ResultSet st=	pediraBd(valores,"USUARIO",con,"USUARIO","CONTRASEÑA");
+		ResultSet st=	pediraBd(valores,nomTabla,con);
 				
 				cerrarSTMT(stmt);
 			return st;
 		
 	}
 	// Metodo query FINALIZADO
-		public ResultSet pediraBd(String valores,String nomTabla,Connection con,String...columnas){
+		public ResultSet pediraBd(String valores,String nomTabla,Connection con){
 			ResultSet st=null;
 			Statement stmt=Bd.usarBD(con);
 			try{
-				
-		
-				
 				 st =stmt.executeQuery("SELECT "+ valores+" FROM  "+nomTabla+" ") ;
-				
-				
-				
 				
 			}catch(Exception e) {
 				e.printStackTrace();
