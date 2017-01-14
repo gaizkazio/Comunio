@@ -144,6 +144,7 @@ public class MercadoDeFichajes extends JPanel{
 		oferta.setColumns(10);	
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */

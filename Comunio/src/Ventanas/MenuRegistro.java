@@ -118,6 +118,7 @@ public class MenuRegistro {
 					System.out.println("Debes escribir una contraseña");
 				}
 				
+				
 				boolean esCorrecto=false;
 			
 				try {

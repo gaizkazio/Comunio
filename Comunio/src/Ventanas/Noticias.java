@@ -14,6 +14,7 @@ public class Noticias extends JFrame{
 	private JTextField textField;
 	public Noticias(Connection con){
 
+		
 		//Parametros asociados a la ventana
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);

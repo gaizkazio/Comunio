@@ -13,6 +13,7 @@ public class Puntuacion {
 	private JFrame frame;
 	private JTable table;
 
+	
 	/**
 	 * Launch the application.
 	 */

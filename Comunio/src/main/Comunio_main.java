@@ -14,5 +14,6 @@ private static Connection con =Bd.initBD("ComunioBD");
 		MenuRegistro menu=new MenuRegistro(con);
 		menu.main(args,con);
 		
+		
 	}
 }
