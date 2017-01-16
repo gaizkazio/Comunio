@@ -53,6 +53,16 @@ public class TestWeb {
 		}
 		
 	}
+	public static void darPuntos(Connection con,String nom,String puntos){
+		Statement st=Bd.usarBD(con);
+		try {
+			st.executeUpdate("UPDATE usuario SET puntuacion='"+puntos+"' WHERE USUARIO='"+nom+"';");
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void convertirComputer(Connection con){
 		Statement st=Bd.usarBD(con);
 		try {

@@ -31,7 +31,7 @@ public class Noticias extends JFrame{
 
 		pestañas.addTab("Puntuacion", panel3);
 
-		JPanel panel4=new JPanel();
+		JPanel panel4=new Alineacion(null,con);
 
 		//Componentes del panel4
 		JLabel et_p4=new JLabel("Estas en Alineacion");
@@ -39,7 +39,7 @@ public class Noticias extends JFrame{
 
 		pestañas.addTab("Alineacion", panel4);
 
-		getContentPane().add(pestañas);
+		
 				
 				
 						//Realizamos lo mismo con el resto
@@ -66,6 +66,7 @@ public class Noticias extends JFrame{
 
 										//Añadimos un nombre de la pestaña y el panel
 										pestañas.addTab("Noticias", panel1);
+										getContentPane().add(pestañas);
 										textField = new JTextField();
 										textField.setBounds(540, 356, 302, 30);
 										panel1.add(textField);

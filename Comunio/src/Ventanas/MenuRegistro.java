@@ -188,6 +188,8 @@ public class MenuRegistro {
 	 */
 	private void initialize(Connection con) {
 		TestWeb tw=new TestWeb();
+		tw.darPuntos(con, "gaizka","85");
+		tw.darPuntos(con, "mikel","32");
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -249,7 +251,7 @@ public class MenuRegistro {
 							usuario.setNombre(textoUsuario.getText());
 							usuario.setContraseña(textoContraseña.getText());
 							System.out.println("Se ha conectado");
-							 usuario= new Usuario(textoUsuario.getText(),"");
+							 
 							
 							esCorrecto=true;
 						}
