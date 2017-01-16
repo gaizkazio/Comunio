@@ -26,21 +26,141 @@ public class MenuRegistro {
 	private JTextField textoContraseña;
 	
 	
-    private bd_statements bds= new bd_statements();
-    private static Usuario usuario=new Usuario("gaizka","gaizka");
+    private static bd_statements bds= new bd_statements();
+    private static TestWeb tw= new TestWeb();
+    public static Usuario usuario=new Usuario("gaizka","gaizka");
     private static String equipo="";
     private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las palmas","leganes","malaga","osasuna","real madrid","real sociedad","sevilla","sporting","valencia","villareal"};
-    private final int PT=2;
-    private final int DF=5;
-    private final int MC=5;
-    private final int DL=3;
-    private String[] alineacion;
+    private final static int PT=2;
+    private final static int DF=5;
+    private final static int MC=5;
+    private final static int DL=3;
+    private static Jugador[] alineacion= new Jugador[30];
     
 	/**
 	 * Launch the application.
 	 */
     public static String getName(){
     	return usuario.getNombre();
+    }
+    public static Jugador[] ordenarArray(Jugador[] jugadores){
+    	for(int i=0;i<jugadores.length && jugadores[i]!=null && jugadores[i+1]!=null;i++){
+    		if(jugadores[i].getPosicion().equals("PT")&&(jugadores[i-1].getPosicion().equals("DF")||jugadores[i-1].getPosicion().equals("MC")||jugadores[i-1].getPosicion().equals("DL"))){
+    			Jugador jugador=jugadores[i-1];
+    			jugadores[i-1]=jugadores[i];
+    			jugadores[i]=jugador;
+    			i=0;
+    		}
+    		 if(jugadores[i+1].getPosicion().equals("DF")&&(jugadores[i].getPosicion().equals("MC")||jugadores[i].getPosicion().equals("DL"))){
+    			Jugador jugador=jugadores[i];
+    			jugadores[i]=jugadores[i+1];
+    			jugadores[i+1]=jugador;
+    			i=0;
+    		}
+    		 if(jugadores[i+1].getPosicion().equals("MC")&&(jugadores[i].getPosicion().equals("DL"))){
+    			Jugador jugador=jugadores[i];
+    			jugadores[i]=jugadores[i+1];
+    			jugadores[i+1]=jugador;
+    			i=0;
+    		}
+    	}
+    	
+    	
+    	return jugadores;
+    }
+    public static void darJugadores(Connection con){
+    	ResultSet rs;
+    	Statement st=Bd.usarBD(con);
+    	Statement stt=Bd.usarBD(con);
+    	int cont=0;
+    	int contJug=0;
+    	int contPT=0;
+    	int contDF=0;
+    	int contMC=0;
+    	int contDL=0;
+    	try {
+    		 rs=bds.seleccionarValores("*", "jugador", con);
+			while(rs.next()){
+				if(rs.getString(6).equals(usuario.getNombre())){
+					cont++;
+				}
+			}
+			rs.close();
+			if(cont==0){
+				System.out.println("No tienes ningun jugador");
+				while(contJug<15){
+				Jugador jugador=tw.generarJugador(con);
+				if(jugador.getPosicion().equals("PT")&&jugador.getDueño().equals("computer") && contPT<PT){
+					for(int i=0;i<alineacion.length;i++){
+						if(alineacion[i]==null){
+							alineacion[i]=jugador;
+							i=alineacion.length;
+							contPT++;
+							contJug++;
+						}
+					}
+				}
+				
+				if(jugador.getPosicion().equals("DF")&&jugador.getDueño().equals("computer") && contDF<DF){
+					for(int i=0;i<alineacion.length;i++){
+						if(alineacion[i]==null){
+							alineacion[i]=jugador;
+							i=alineacion.length;
+							contDF++;
+							contJug++;
+						}
+					}
+				}
+				
+				if(jugador.getPosicion().equals("MC")&&jugador.getDueño().equals("computer") && contMC<MC){
+					for(int i=0;i<alineacion.length;i++){
+						if(alineacion[i]==null){
+							alineacion[i]=jugador;
+							i=alineacion.length;
+							contMC++;
+							contJug++;
+						}
+					}
+				}
+				
+				if(jugador.getPosicion().equals("DL")&&jugador.getDueño().equals("computer") && contDL<DL){
+					for(int i=0;i<alineacion.length;i++){
+						if(alineacion[i]==null){
+							alineacion[i]=jugador;
+							i=alineacion.length;
+							contDL++;
+							contJug++;
+						}
+					}
+				}		
+				System.out.println(contJug);
+				}
+				ordenarArray(alineacion);
+				for(int i=0;i<15;i++){
+					System.out.println("hola");
+					System.out.println(alineacion[i].toString());
+					alineacion[i].setDueño(MenuRegistro.usuario.getNombre());
+					System.out.println("empieza el insert");
+					st.executeUpdate("INSERT INTO alineacion VALUES('"+alineacion[i].getNombre()+"','"+alineacion[i].getPosicion()+"','"+alineacion[i].getPuntuacioTotal()+"','"+alineacion[i].getDueño()+"');");
+					
+						Thread.sleep(100);
+					System.out.println("empieza el update");
+				
+					stt.executeUpdate("UPDATE jugador SET dueño='"+alineacion[i].getDueño()+"' WHERE nombre='"+alineacion[i].getNombre()+"';");
+					Thread.sleep(100);
+				}
+				st.close();
+				stt.close();
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
     }
 	public static void main(String[] args,Connection con) {
 		
@@ -68,7 +188,6 @@ public class MenuRegistro {
 	 */
 	private void initialize(Connection con) {
 		TestWeb tw=new TestWeb();
-		tw.eliminarCosas(con);
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,13 +260,8 @@ public class MenuRegistro {
 					e.printStackTrace();
 				}
 				if(esCorrecto){
-					int cont=0;
-					int contJug=0;
-					int contPT=0;
-					int contDF=0;
-					int contMC=0;
-					int contDL=0;
-					ResultSet rs=bds.seleccionarValores("*", "jugador", con);
+					
+					darJugadores(con);
 					System.out.println();
 					
 					

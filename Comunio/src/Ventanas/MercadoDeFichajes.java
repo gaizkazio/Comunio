@@ -76,7 +76,7 @@ public class MercadoDeFichajes extends JPanel{
 		btnOferta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(oferta!=null){
-					String ofertaNum=oferta.getText();
+					String ofertaNum=oferta.getText(); // label donde se escribe el dinero de la apuesta
 					String jugador=(String) lista.getSelectedValue();
 					System.out.println(jugador);
 					String nombre=getName(jugador);
@@ -87,6 +87,7 @@ public class MercadoDeFichajes extends JPanel{
 					Statement stt=Bd.usarBD(con);
 					int precio1=Integer.parseInt(oferta.getText());
 					int precio2=Integer.parseInt(getPrecio(jugador));
+					//el valor de la oferta tiene que ser mayor que el del jugador
 					if(precio1<precio2){
 						precioMayor=false;
 						System.out.println("El precio es menor que el valor del jugador");
@@ -186,7 +187,7 @@ public class MercadoDeFichajes extends JPanel{
 		
 	}
 	
-	
+	//mete en la lista el jugador
 	public void agregarALista(String jugador){	
 		modelo.addElement(jugador);
 		

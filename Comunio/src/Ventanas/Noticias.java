@@ -23,7 +23,7 @@ public class Noticias extends JFrame{
 
 		//Creamos el conjunto de pestañas
 		JTabbedPane pestañas=new JTabbedPane();
-		JPanel panel3=new JPanel();
+		JPanel panel3=new Puntuacion(null, con);
 
 		//Componentes del panel3
 		JLabel et_p3=new JLabel("Estas en Puntuacion");
@@ -45,7 +45,7 @@ public class Noticias extends JFrame{
 						//Realizamos lo mismo con el resto
 						
 						JPanel panel2= new MercadoDeFichajes(null,con);
-						panel2.setLayout(null);
+						
 								//Componentes del panel2
 								
 								

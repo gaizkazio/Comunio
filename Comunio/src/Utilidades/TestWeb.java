@@ -20,6 +20,7 @@ import org.htmlparser.lexer.Page;
 import Connection.Bd;
 import Entidades.Jugador;
 import Ventanas.MenuRegistro;
+import Ventanas.bd_statements;
 
 /** 
  * Clase de test de una dirección web para ver su contenido
@@ -33,11 +34,35 @@ import Ventanas.MenuRegistro;
 public class TestWeb {
     private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las-palmas","leganes","malaga","osasuna","real-madrid","real-sociedad","sevilla","sporting","valencia","villarreal"};
     private static String Elequipo="";
+    private static bd_statements bds= new bd_statements();
     
-    
-	public static void main(String[] args,Connection con) {
-	eliminarCosas(con);
-	
+	public static void meterAlineacion(Connection con){
+		Statement st=Bd.usarBD(con);
+		ResultSet rs=bds.seleccionarValores("*", "jugador", con);
+		try {
+			while(rs.next()){
+				if(!(rs.getString("dueño").equals("computer"))){
+					Jugador jugador=new Jugador(rs.getString(1),rs.getString(4),rs.getString(3),rs.getString(7),rs.getString(5),rs.getString(6));
+					st.executeUpdate("INSERT INTO alineacion VALUES('"+jugador.getNombre()+"','"+jugador.getPosicion()+"','"+jugador.getPuntuacioTotal()+"','"+jugador.getDueño()+"');");
+				}
+			}
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public static void convertirComputer(Connection con){
+		Statement st=Bd.usarBD(con);
+		try {
+			st.executeUpdate("UPDATE jugador SET dueño='computer';");
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	public static void jugadoresEnMercado(Connection con){
 		Statement stmt=Bd.usarBD(con);
@@ -64,7 +89,7 @@ public class TestWeb {
 		
 		Statement st=Bd.usarBD(con);
 		try {
-			st.executeUpdate("DELETE FROM oferta;");
+			st.executeUpdate("DELETE FROM alineacion;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -233,7 +258,6 @@ Tag TD -> td class="aleft"
 	public static String sacarNombre(int a,String[]jugadores){
 		String nom="";
 		int posNom=0;
-		
 		if(a==0)a=1;
 		for(int j=0;j<jugadores[a].length();j++){
 			if(jugadores[a].charAt(j)=="[".charAt(0)){
@@ -241,7 +265,6 @@ Tag TD -> td class="aleft"
 				j=jugadores[a].length();
 			}
 		}
-		System.out.println("el string es: "+jugadores[a]);
 		nom=jugadores[a].substring(9, posNom);
 		return nom;
 	}
@@ -260,7 +283,7 @@ Tag TD -> td class="aleft"
 	
 	public static String sacarPosiciones(String nombre,String[]equipo){
 		String nombreI;
-		String posicion="";
+		String posicion="a";
 		int posNom=0;
 		int posPos=0;
 		int cont =0;
@@ -277,14 +300,12 @@ Tag TD -> td class="aleft"
 				for(int l=0;l<equipo[i].length();l++){
 					
 					if(equipo[i].charAt(l)==",".charAt(0)){
-						if(cont<14)
+						if(cont<13)
 						cont++;
 					}
-					if(cont==14){
-						System.out.print("La posicion de "+ nombre +" es: ");
-						posPos=l+2;
+					if(cont==13){
+						posPos=l+1;
 						posicion=equipo[i].substring(posPos, posPos+2);
-						System.out.println(posicion);
 						l=equipo[i].length();
 					}
 				}
@@ -299,43 +320,30 @@ Tag TD -> td class="aleft"
 		String nomJugador=null;
 		String[]jugadores = new String[50];
 		int a = (int)(Math.random()*20);
-		System.out.println(a);
 		int cont=0;
 		Elequipo=equipos[a];
-		System.out.println(Elequipo);
 		 ResultSet st = null;
 		 ResultSet stt=null;
 		 Statement stmt=Bd.usarBD(conn);
 		 Statement stmtt=Bd.usarBD(conn);
 			try{
-				 st =stmt.executeQuery("SELECT COUNT(*) FROM jugador WHERE equipo='"+Elequipo+"'") ;
+				 st =stmt.executeQuery("SELECT COUNT(*) FROM jugador WHERE equipo='"+Elequipo+"';") ;
 				cont=Integer.parseInt(st.getString(1));
 				if(cont>35){
 					cont/=2;
 				}
 				jugadores = new String[cont];
-				stt=stmtt.executeQuery("SELECT * FROM jugador WHERE equipo='"+Elequipo+"'");
+				stt=stmtt.executeQuery("SELECT * FROM jugador WHERE equipo='"+Elequipo+"' AND dueño='computer';");
 				while(stt.next() && cont2<=cont){
-					
-					jugadores[cont2]="JUGADOR: "+stt.getString(1)+"  ["+stt.getString(3)+", 4,2, "+stt.getString(4)+", 2,  , 6,  , 2,  , 10,  , 2,  ]";
+					jugadores[cont2]="JUGADOR: "+stt.getString(1)+"  ["+stt.getString(3)+", 4,2, "+stt.getString(4)+", 2,  , 6,  , 2,  , 10,  , 2,"+stt.getString(7)+"]";
 					cont2++;
 				}
 			}catch(Exception e) {
 				e.printStackTrace();
 				
 		}
-		for(int i=0;i<jugadores.length;i++){
-			System.out.println(jugadores[i]);
-		}
-		
-		System.out.println(cont);
 		int b=1+(int)(Math.random()*(cont-1));
-		System.out.println(b);
-		
-			
 			nomJugador=sacarNombre(jugadores[b]);
-		
-		System.out.println(nomJugador);
 		Jugador jugador=new Jugador(nomJugador,sacarPrecio(nomJugador,jugadores),sacarPuntosTotales(nomJugador, jugadores),sacarPosiciones(nomJugador,jugadores),Elequipo,"computer");
 		return jugador;
 	}
@@ -381,31 +389,17 @@ Tag TD -> td class="aleft"
 					if(cont==13&& cont13==0){
 						cont13++;
 						posNom=l;
-						pospos=equipo[i].substring(posicion2+2, posNom);
-						
-						System.out.println(posicion);
-						System.out.println(pospos);
-						
-						if(!posicion.equals("-"))
-						 r=Integer.parseInt(posicion);
-						if(!pospos.equals("-"))
-						 s =Integer.parseInt(pospos);
+						pospos=equipo[i].substring(posicion2+2, posNom);				
+						if(!posicion.equals("-")) r=Integer.parseInt(posicion);
+						if(!pospos.equals("-")) s =Integer.parseInt(pospos);
 						if(!posicion.equals("-") && !pospos.equals("-"))
-						posicion=String.valueOf(r-s);
 						
-						posicion=String.valueOf(posicion);
-						
-						
-						System.out.println("La puntuacion anterior de "+nombre+" es: "+posicion);
+							posicion=String.valueOf(r-s);
+						    posicion=String.valueOf(posicion);
 					}
 				}
 				i=equipo.length;	}
-			
-		
 		}
-		
-		
-		
 		return posicion;
 	}
 	public static String sacarPuntosTotales(String nombre,String[]equipo){
@@ -428,23 +422,16 @@ Tag TD -> td class="aleft"
 				 cont =0;
 				for(int l=0;l<equipo[i].length();l++){
 					if(equipo[i].charAt(l)==",".charAt(0)){
-						
 						cont++;
 					}
 					if(cont==1){
-						System.out.print("La puntuacion de "+ nombre +" es: ");
 						posNom=l;
 						posicion=equipo[i].substring(p+1,posNom);
-						System.out.println(posicion);
 						l=equipo[i].length();	
 					}
 				}
 				i=equipo.length;	}
-		
 		}
-		
-		
-		
 		return posicion;
 	}
 	
@@ -462,9 +449,7 @@ Tag TD -> td class="aleft"
 					j=equipo[i].length();
 				}
 			}
-			
 			nombreI=equipo[i].substring(9,posNom);
-			
 			if(nombreI.equals(nombre)){
 				 cont =0;
 				for(int l=0;l<equipo[i].length();l++){
@@ -477,25 +462,15 @@ Tag TD -> td class="aleft"
 						cont2++;
 					}
 					 if(cont==4){
-						System.out.print("El precio de "+ nombre +" es: ");
 						posNom=l;
 						posicion=equipo[i].substring(posPre+1, posNom);
-						System.out.println(posicion);
 						l=equipo[i].length();	
 					}
 				}
 				i=equipo.length;	}
-		
 		}
-		
-		
-		
 		return posicion;
-	
-		
 	}
-	
-	
 }
 
 

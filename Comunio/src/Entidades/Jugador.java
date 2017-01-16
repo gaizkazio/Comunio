@@ -3,6 +3,12 @@ package Entidades;
 import java.awt.Component;
 
 public class Jugador {
+	@Override
+	public String toString() {
+		return "Jugador [nombre=" + nombre + ", precio=" + precio + ", puntuacioTotal=" + puntuacioTotal + ", posicion="
+				+ posicion + ", equipo=" + equipo + ", dueño=" + dueño + "]";
+	}
+
 	private String nombre,precio,puntuacioTotal,posicion,equipo,dueño;
 
 	public Jugador(String nombre, String precio, String puntuacioTotal, String posicion, String equipo, String dueño) {
