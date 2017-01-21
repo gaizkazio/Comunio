@@ -300,6 +300,7 @@ public class MercadoDeFichajes extends JPanel{
 				System.out.println("se ha colado");
 				actualizar=true;
 			}
+			
 			sd = st.executeQuery("SELECT * FROM MERCADO");
 			while(sd.next() && actualizar){
 				if(i>=a && i<=j){
