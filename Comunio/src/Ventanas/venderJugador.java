@@ -44,6 +44,7 @@ public class venderJugador extends JFrame{
 		initialize(i,jugadores,con);
 	}
 
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
