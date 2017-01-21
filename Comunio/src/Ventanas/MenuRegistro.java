@@ -3,7 +3,7 @@ package Ventanas;
 import java.awt.EventQueue;
 import java.awt.Frame;
 import java.awt.Window;
-
+import java.util.Date;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 
@@ -17,6 +17,9 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.sql.*;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 public class MenuRegistro {
 
 	private JFrame frame;
@@ -30,7 +33,7 @@ public class MenuRegistro {
     private static TestWeb tw= new TestWeb();
     public static Usuario usuario=new Usuario("gaizka","gaizka");
     private static String equipo="";
-    private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las palmas","leganes","malaga","osasuna","real madrid","real sociedad","sevilla","sporting","valencia","villareal"};
+    private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las-palmas","leganes","malaga","osasuna","real-madrid","real-sociedad","sevilla","sporting","valencia","villarreal"};
     private final static int PT=2;
     private final static int DF=5;
     private final static int MC=5;
@@ -185,6 +188,73 @@ public class MenuRegistro {
 	 */
 	private void initialize(Connection con) {
 		TestWeb tw=new TestWeb();
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.HOUR_OF_DAY, 21);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		Date horaDespertar = c.getTime();
+		Date ahora=new Date(System.currentTimeMillis());
+		Timer timer;
+	    timer = new Timer();
+	    TimerTask task = new TimerTask(){
+
+			@Override
+			public void run() {
+
+				Statement st=Bd.usarBD(con);
+				for(int k=0;k<equipos.length;k++){
+				String[] jugadores= tw.pruebaDatosJugadoresComuniazo("http://www.comuniazo.com/comunio/equipos/"+equipos[k]);
+				int comas=0;
+				int cont=0;
+				//contador de jugadores de ese equipo
+				for(int i=0;i<jugadores.length;i++){
+					if(jugadores[i]!=null)
+					for(int j=0;j<jugadores[i].length();j++){
+						if(jugadores[i].charAt(j)==",".charAt(0) && !(jugadores[i].endsWith("[]"))){
+							comas++;
+						}
+					}
+					if(comas>0)
+					cont++;
+					comas=0;
+				}
+				//actualizar cada jugador
+				for(int i=0;i<cont;i++){
+					
+					String nombre=tw.sacarNombre(i+1, jugadores);
+					String jugador="UPDATE jugador SET puntuacionAnterior=( '"+tw.sacarPuntosAnterior(nombre, jugadores)+"');";
+					String jugador2="UPDATE jugador SET puntuacionAnterior=( '"+tw.sacarPuntosTotales(nombre, jugadores)+"');";
+					try {
+						st.executeUpdate(jugador);
+						st.executeUpdate(jugador2);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+				
+				
+				try {
+					
+					ResultSet rs=st.executeQuery("SELECT puntuacionTotal-puntuacionAnterior,dueño from jugador,alineacion WHERE nombreUsuario=dueño AND estaAlineado='SI';");
+					
+					while(rs.next()){
+					st.executeUpdate("UPDATE usuario SET puntuacion= puntuacion+"+rs.getInt(1)+" WHERE USUARIO='"+rs.getString(2)+"';");
+					}
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			
+				
+			}
+	    	
+	    };
+	    if(ahora.getDay()==2)
+	    timer.schedule(task, horaDespertar, 604800000);
+	    
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

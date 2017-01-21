@@ -7192,3 +7192,668 @@
   <message>Conectada base de datos ComunioBD</message>
 </record>
 </log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T19:09:04</date>
+  <millis>1485022144080</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T19:10:41</date>
+  <millis>1485022241897</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:28:32</date>
+  <millis>1485026912805</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:31:12</date>
+  <millis>1485027072779</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:42:06</date>
+  <millis>1485027726245</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:43:43</date>
+  <millis>1485027823914</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:47:49</date>
+  <millis>1485028069745</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:51:49</date>
+  <millis>1485028309351</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:54:36</date>
+  <millis>1485028476717</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:57:12</date>
+  <millis>1485028632912</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:58:47</date>
+  <millis>1485028727314</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T20:59:56</date>
+  <millis>1485028796223</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:01:59</date>
+  <millis>1485028919042</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:02:41</date>
+  <millis>1485028961253</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:04:03</date>
+  <millis>1485029043938</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:05:14</date>
+  <millis>1485029114222</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:09:56</date>
+  <millis>1485029396244</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:10:05</date>
+  <millis>1485029405606</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:10:16</date>
+  <millis>1485029416859</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:10:26</date>
+  <millis>1485029426958</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:12:10</date>
+  <millis>1485029530854</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:13:49</date>
+  <millis>1485029629192</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:17:01</date>
+  <millis>1485029821157</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:29:11</date>
+  <millis>1485030551468</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:38:13</date>
+  <millis>1485031093619</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:39:46</date>
+  <millis>1485031186212</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:42:07</date>
+  <millis>1485031327816</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:44:20</date>
+  <millis>1485031460333</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:44:51</date>
+  <millis>1485031491370</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:46:45</date>
+  <millis>1485031605998</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:47:59</date>
+  <millis>1485031679084</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:49:13</date>
+  <millis>1485031753963</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:50:32</date>
+  <millis>1485031832784</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:51:05</date>
+  <millis>1485031865204</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:51:58</date>
+  <millis>1485031918323</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:54:34</date>
+  <millis>1485032074474</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:54:57</date>
+  <millis>1485032097084</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T21:58:49</date>
+  <millis>1485032329607</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:00:02</date>
+  <millis>1485032402730</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:01:31</date>
+  <millis>1485032491016</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:03:57</date>
+  <millis>1485032637046</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:06:58</date>
+  <millis>1485032818541</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:09:57</date>
+  <millis>1485032997497</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:29:20</date>
+  <millis>1485034160827</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:30:58</date>
+  <millis>1485034258342</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>
+<?xml version="1.0" encoding="windows-1252" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2017-01-21T22:45:53</date>
+  <millis>1485035153412</millis>
+  <sequence>0</sequence>
+  <logger>Connection.Bd</logger>
+  <level>INFO</level>
+  <class>Connection.Bd</class>
+  <method>log</method>
+  <thread>1</thread>
+  <message>Conectada base de datos ComunioBD</message>
+</record>
+</log>

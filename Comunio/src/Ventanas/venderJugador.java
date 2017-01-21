@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 public class venderJugador extends JFrame{
 	private JTextField txtAQuinVenders;
 	ResultSet rs=null;
+	ResultSet rss=null;
 	Jugador jugador=null;
 	/**
 	 * Launch the application.
@@ -52,10 +53,11 @@ public class venderJugador extends JFrame{
 	private void initialize(int i, Jugador[]jugadores,Connection con) {
 		
 		setBounds(100, 100, 476, 341);
-		setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(this.HIDE_ON_CLOSE);
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		
 		Statement st=Bd.usarBD(con);
+		Statement stt=Bd.usarBD(con);
 		JComboBox comboBox = new JComboBox();
 		getContentPane().add(comboBox, BorderLayout.CENTER);
 		JButton Vender = new JButton("Vender");
@@ -67,13 +69,17 @@ public class venderJugador extends JFrame{
 		Vender.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					rs=st.executeQuery("SELECT nombre,puntuacionTotal,precio,equipo FROM jugador where nombre='"+comboBox.getSelectedItem()+"';");
-					while(rs.next()){
+					rs=stt.executeQuery("SELECT nombre,puntuacionTotal,precio,equipo FROM jugador where nombre='"+comboBox.getSelectedItem()+"';");
+					rss=st.executeQuery("SELECT nombre FROM mercado WHERE nombre='"+comboBox.getSelectedItem()+"';");
+					rss.next();
+					System.out.println(rs.getRow()+" "+rss.getRow());
+					while(rs.next()&& rss.getRow() == 0){
 						 jugador= new Jugador();
 						jugador.setNombre(rs.getString(1));jugador.setPuntuacioTotal(rs.getString(2));jugador.setPrecio(rs.getString(3));jugador.setEquipo(rs.getString(4));
+						st.executeUpdate("INSERT INTO mercado VALUES('"+jugador.getNombre()+"','"+jugador.getPuntuacioTotal()+"','"+jugador.getPrecio()+"','"+jugador.getEquipo()+"');");
+
 					}
-					st.executeUpdate("INSERT INTO mercado VALUES('"+jugador.getNombre()+"','"+jugador.getPuntuacioTotal()+"','"+jugador.getPrecio()+"','"+jugador.getEquipo()+"');");
-					setVisible(false);
+					
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

@@ -1,16 +1,13 @@
 package Ventanas;
 
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
-
 import Connection.Bd;
 import Entidades.Jugador;
 import Utilidades.TestWeb;
-
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
@@ -24,7 +21,7 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
-import java.sql.Date;
+import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -44,11 +41,10 @@ import java.awt.event.MouseEvent;
 
 public class MercadoDeFichajes extends JPanel{
 	private JTextField txtEstasEnMercado;
-	DefaultListModel<String> modelo=new DefaultListModel();;
+	static DefaultListModel<String> modelo=new DefaultListModel();;
 	private static JList lista=new JList();
 	private static String nombreUsuario="Pepe";
-	Boolean haGanadoOferta=false;
-	 
+	static JScrollPane scrollPane = new JScrollPane();
 	 private JTextField oferta;
 	/**
 	 * Launch the application.
@@ -168,38 +164,34 @@ public class MercadoDeFichajes extends JPanel{
 			}
 		Date horaDespertar = new Date(System.currentTimeMillis());
 		Calendar c = Calendar.getInstance();
-		c.setTime(horaDespertar);
-		c.set(Calendar.HOUR_OF_DAY, 8);
+		c.set(Calendar.HOUR, 8);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
+		horaDespertar = c.getTime();
 		Timer timer;
 	    timer = new Timer();
 	    TimerTask task = new TimerTask(){
 			public void run() {
+				actualizarOfertas(con);
+			}
+	    	
+	    };timer.schedule(task,horaDespertar,86400000);
+	   
+	    Timer  timer2 = new Timer();
+	    c.set(Calendar.HOUR,2);
+	    horaDespertar = c.getTime();
+	    TimerTask task2 = new TimerTask(){
+			public void run() {
 				actualizarMercado(con);
 			}
 	    	
-	    };
-	    timer.schedule(task,horaDespertar,86400000);
-		JScrollPane scrollPane = new JScrollPane();
+	    }; timer2.schedule(task2,horaDespertar,100);
+	    
+	   
 		scrollPane.setBounds(390, 100, 605, 450);
 		add(scrollPane);
 	
-		Statement st=Bd.usarBD(con);
-		ResultSet sd;
-		try {
-			sd = st.executeQuery("SELECT * FROM MERCADO");
-			while(sd.next()){
-				Jugador jugador=new Jugador(sd.getString(1),sd.getString(3),sd.getString(2),"",sd.getString(4),"");
-			agregarALista("NOMBRE: "+ jugador.getNombre()+"    PRECIO: "+jugador.getPrecio()+"    EQUIPO: "+jugador.getEquipo()+ "    PUNTOS: "+jugador.getPuntuacioTotal());
-			}
-			st.close();
-			sd.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		scrollPane.setViewportView(lista);
+	
 	
 		txtEstasEnMercado = new JTextField();
 		txtEstasEnMercado.setEditable(false);
@@ -211,7 +203,7 @@ public class MercadoDeFichajes extends JPanel{
 	}
 	
 	//mete en la lista el jugador
-	public void agregarALista(String jugador){	
+	public static void agregarALista(String jugador){	
 		modelo.addElement(jugador);
 		
 	}
@@ -272,7 +264,7 @@ public class MercadoDeFichajes extends JPanel{
 		}
 		return precio;
 	}
-	public static void actualizarMercado(Connection con){
+	public static void actualizarOfertas(Connection con){
 		Statement st=Bd.usarBD(con);
 		ResultSet rs;
 		String[]jugador=new String[4];
@@ -292,5 +284,36 @@ public class MercadoDeFichajes extends JPanel{
 		
 		
 		
+	}
+	public static void actualizarMercado(Connection con){
+		Statement st=Bd.usarBD(con);
+		ResultSet sd;
+		ResultSet sdd;
+		int i=0;
+		int j=0;
+		boolean actualizar=false;
+		int a=modelo.getSize();
+		try {
+			sdd=st.executeQuery("SELECT COUNT(*) FROM MERCADO");
+			j=sdd.getInt(1);
+			if(!(a==sdd.getInt(1))) {
+				System.out.println("se ha colado");
+				actualizar=true;
+			}
+			sd = st.executeQuery("SELECT * FROM MERCADO");
+			while(sd.next() && actualizar){
+				if(i>=a && i<=j){
+				Jugador jugador=new Jugador(sd.getString(1),sd.getString(3),sd.getString(2),"",sd.getString(4),"");
+			agregarALista("NOMBRE: "+ jugador.getNombre()+"    PRECIO: "+jugador.getPrecio()+"    EQUIPO: "+jugador.getEquipo()+ "    PUNTOS: "+jugador.getPuntuacioTotal());
+			}
+				i++;
+			}
+			st.close();
+			sd.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		scrollPane.setViewportView(lista);
 	}
 }

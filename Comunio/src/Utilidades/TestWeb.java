@@ -118,7 +118,7 @@ public class TestWeb {
 		
 		Statement st=Bd.usarBD(con);
 		try {
-			st.executeUpdate("DELETE FROM alineacion;");
+			st.executeUpdate("DELETE FROM mercado;");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
