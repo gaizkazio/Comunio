@@ -1,6 +1,7 @@
 package Ventanas;
 
 import java.awt.EventQueue;
+import java.awt.Frame;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
@@ -37,6 +38,7 @@ public class Alineacion extends JPanel {
 	static JComboBox comboBoxDel1 = new JComboBox();
 	static JComboBox comboBoxDel2 = new JComboBox();
 	static JComboBox comboBoxDel3 = new JComboBox();
+	
 	
 
 	/**
@@ -95,8 +97,6 @@ public class Alineacion extends JPanel {
 		comboBoxDel1.setBounds(506, 245, 114, 20);
 		add(comboBoxDel1);
 		comboBoxDel1.addItem(" ");
-		
-		
 		
 		comboBoxDel2.setBounds(651, 245, 114, 20);
 		add(comboBoxDel2);
@@ -160,7 +160,6 @@ public class Alineacion extends JPanel {
 				comboBoxDel3.addItem(jugadores[j].getNombre());
 			}
 		}
-		hiloCambioPantalla = new HiloCambioPantalla();
 		Timer timer;
 	    timer = new Timer();
 	    TimerTask task = new TimerTask(){
@@ -207,7 +206,7 @@ public class Alineacion extends JPanel {
 	    	
 	    };
 	    timer.schedule(task, 10, 100);
-	
+	final int ia=i;
 		JButton btnNewButton = new JButton("GuardarAlineacion");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -216,13 +215,29 @@ public class Alineacion extends JPanel {
 		});
 		btnNewButton.setBounds(646, 501, 119, 23);
 		add(btnNewButton);
+		btnVenderjugador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+				Frame frame2= new venderJugador(ia,jugadores,con);
+				frame2.setVisible(true);
+				while(frame2.isActive()){
+					
+				}
+				if(!frame2.isActive()){
+					setVisible(true);
+				}
+			}
+		});
+		btnVenderjugador.setBounds(815, 501, 89, 23);
+		
+		add(btnVenderjugador);
 		
 		
 	}
 	 public static HiloCambioPantalla hiloCambioPantalla;
+	 private final JButton btnVenderjugador = new JButton("venderJugador");
  static class HiloCambioPantalla extends Thread{
 		
-		 
 		 public  void run() {
 			
 				if(comboBoxDef1.getSelectedIndex()!=0 &&(comboBoxDef1.getSelectedItem().equals(comboBoxDef2.getSelectedItem())||comboBoxDef1.getSelectedItem().equals(comboBoxDef3.getSelectedItem()))){
@@ -234,7 +249,6 @@ public class Alineacion extends JPanel {
 				if(comboBoxDef3.getSelectedIndex()!=0 &&(comboBoxDef3.getSelectedItem().equals(comboBoxDef1.getSelectedItem())||comboBoxDef3.getSelectedItem().equals(comboBoxDef2.getSelectedItem()))){
 					comboBoxDef3.setSelectedIndex(0);
 				}
-				
 				
 				if(comboBoxMedio1.getSelectedIndex()!=0 &&(comboBoxMedio1.getSelectedItem().equals(comboBoxMedio2.getSelectedItem())||comboBoxMedio1.getSelectedItem().equals(comboBoxMedio3.getSelectedItem())||comboBoxMedio1.getSelectedItem().equals(comboBoxMedio4.getSelectedItem()))){
 					comboBoxMedio1.setSelectedIndex(0);
@@ -249,7 +263,6 @@ public class Alineacion extends JPanel {
 					comboBoxMedio4.setSelectedIndex(0);
 				}
 				
-				
 				if(comboBoxDel1.getSelectedIndex()!=0 &&(comboBoxDel1.getSelectedItem().equals(comboBoxDel2.getSelectedItem())||comboBoxDel1.getSelectedItem().equals(comboBoxDel3.getSelectedItem()))){
 					comboBoxDel1.setSelectedIndex(0);
 				}
@@ -260,10 +273,6 @@ public class Alineacion extends JPanel {
 					comboBoxDel3.setSelectedIndex(0);
 				}
 				
-				
-			
-			
-			 
 		        }
 		
 	 }
@@ -280,4 +289,7 @@ public class Alineacion extends JPanel {
 		}
 	 }
  }
+ 
+ 
+ 
 }

@@ -63,6 +63,16 @@ public class TestWeb {
 			e.printStackTrace();
 		}
 	}
+	public static void darDinero(Connection con,String nom,String dinero){
+		Statement st=Bd.usarBD(con);
+		try {
+			st.executeUpdate("UPDATE usuario SET dinero='"+dinero+"' WHERE USUARIO='"+nom+"';");
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void convertirComputer(Connection con){
 		Statement st=Bd.usarBD(con);
 		try {
@@ -73,6 +83,15 @@ public class TestWeb {
 			e.printStackTrace();
 		}
 		
+	}
+	public void añadirTiempo(Connection con){
+		Statement st=Bd.usarBD(con);
+		try {
+			st.executeUpdate("ALTER TABLE oferta ADD tiempo DATE;");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	public static void jugadoresEnMercado(Connection con){
 		Statement stmt=Bd.usarBD(con);

@@ -19,7 +19,7 @@ public class Noticias extends JFrame{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setExtendedState(MAXIMIZED_BOTH);
 		setVisible(true);
-		setTitle("Ejemplo JTabbedPane");
+		setTitle("COMUNIO");
 
 		//Creamos el conjunto de pestañas
 		JTabbedPane pestañas=new JTabbedPane();

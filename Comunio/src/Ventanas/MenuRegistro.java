@@ -137,10 +137,7 @@ public class MenuRegistro {
 				}
 				ordenarArray(alineacion);
 				for(int i=0;i<15;i++){
-					System.out.println("hola");
-					System.out.println(alineacion[i].toString());
 					alineacion[i].setDueño(MenuRegistro.usuario.getNombre());
-					System.out.println("empieza el insert");
 					st.executeUpdate("INSERT INTO alineacion VALUES('"+alineacion[i].getNombre()+"','"+alineacion[i].getPosicion()+"','"+alineacion[i].getPuntuacioTotal()+"','"+alineacion[i].getDueño()+"');");
 					
 						Thread.sleep(100);
@@ -188,8 +185,6 @@ public class MenuRegistro {
 	 */
 	private void initialize(Connection con) {
 		TestWeb tw=new TestWeb();
-		tw.darPuntos(con, "gaizka","85");
-		tw.darPuntos(con, "mikel","32");
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -268,7 +263,7 @@ public class MenuRegistro {
 					
 					
 				frame.setVisible(false);
-					Frame frame2=new  Noticias(con);
+					Frame frame2=new Noticias(con);
 					frame2.setVisible(true);
 					
 					

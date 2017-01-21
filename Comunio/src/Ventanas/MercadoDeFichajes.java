@@ -24,9 +24,13 @@ import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.DefaultListModel;
@@ -41,9 +45,9 @@ import java.awt.event.MouseEvent;
 public class MercadoDeFichajes extends JPanel{
 	private JTextField txtEstasEnMercado;
 	DefaultListModel<String> modelo=new DefaultListModel();;
-	private JList lista=new JList();
+	private static JList lista=new JList();
 	private static String nombreUsuario="Pepe";
-	
+	Boolean haGanadoOferta=false;
 	 
 	 private JTextField oferta;
 	/**
@@ -71,7 +75,9 @@ public class MercadoDeFichajes extends JPanel{
 	public MercadoDeFichajes(JPanel mercadopanel,Connection con) {
 		initialize(mercadopanel,con);
 		lista.setModel(modelo);
-		
+		Date horaDespertar = new Date(System.currentTimeMillis());
+		Calendar c = Calendar.getInstance();
+		c.setTime(horaDespertar);
 		JButton btnOferta = new JButton("OFERTA");
 		btnOferta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -83,7 +89,7 @@ public class MercadoDeFichajes extends JPanel{
 					boolean hayJugador=false;
 					boolean precioMayor=false;
 					ResultSet rpd=null;
-					String envio="INSERT INTO oferta VALUES('"+MenuRegistro.getName()+"','"+nombre+"','"+oferta.getText()+"');";
+					String envio="INSERT INTO oferta VALUES('"+MenuRegistro.getName()+"','"+nombre+"','"+Integer.parseInt(oferta.getText())+"','"+c.get(Calendar.DAY_OF_MONTH)+"-"+c.get(Calendar.MONTH)+"-"+c.get(Calendar.YEAR)+"',"+lista.getSelectedIndex()+" );";
 					Statement stt=Bd.usarBD(con);
 					int precio1=Integer.parseInt(oferta.getText());
 					int precio2=Integer.parseInt(getPrecio(jugador));
@@ -103,7 +109,10 @@ public class MercadoDeFichajes extends JPanel{
 							hayJugador=false;
 						     }
 						                  }
-						if(rpd.getRow()==0 && hayJugador==false && precioMayor)stt.executeUpdate(envio);
+						if(rpd.getRow()==0 && hayJugador==false && precioMayor){
+							stt.executeUpdate(envio);
+							oferta.setText("");
+						}
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -157,7 +166,21 @@ public class MercadoDeFichajes extends JPanel{
 			mercadopanel.setLayout(new BorderLayout());
 			mercadopanel.add(panel, BorderLayout.CENTER);
 			}
-		
+		Date horaDespertar = new Date(System.currentTimeMillis());
+		Calendar c = Calendar.getInstance();
+		c.setTime(horaDespertar);
+		c.set(Calendar.HOUR_OF_DAY, 8);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		Timer timer;
+	    timer = new Timer();
+	    TimerTask task = new TimerTask(){
+			public void run() {
+				actualizarMercado(con);
+			}
+	    	
+	    };
+	    timer.schedule(task,horaDespertar,86400000);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(390, 100, 605, 450);
 		add(scrollPane);
@@ -167,7 +190,7 @@ public class MercadoDeFichajes extends JPanel{
 		try {
 			sd = st.executeQuery("SELECT * FROM MERCADO");
 			while(sd.next()){
-				Jugador jugador=new Jugador(sd.getString(1),sd.getString(3),sd.getString(2),"","","");
+				Jugador jugador=new Jugador(sd.getString(1),sd.getString(3),sd.getString(2),"",sd.getString(4),"");
 			agregarALista("NOMBRE: "+ jugador.getNombre()+"    PRECIO: "+jugador.getPrecio()+"    EQUIPO: "+jugador.getEquipo()+ "    PUNTOS: "+jugador.getPuntuacioTotal());
 			}
 			st.close();
@@ -194,7 +217,7 @@ public class MercadoDeFichajes extends JPanel{
 	}
 	//coge el nombre del jugador teniendo en cuenta el string que devuelve la tabla ofertas
 
-	public String getName(String nom){
+	public static String getName(String nom){
 		String nombre="";
 		int g=0;
 		int h=0;
@@ -235,23 +258,39 @@ public class MercadoDeFichajes extends JPanel{
 				h1++;
 			}
 		}
-		
 		nombre=nom.substring(g,h);
-		
 		nombre=quitarPuntos(nombre);
-		
 		return nombre;	
 	}
 	//quita los puntos que tienen los numeros
-	public String quitarPuntos(String precio){
-		
+	public static String quitarPuntos(String precio){
 		for(int i=0;i<precio.length();i++){
 			if(precio.charAt(i)==".".charAt(0)){
 				System.out.println("ha encontrado el punto");
 				precio=precio.substring(0, i)+precio.substring(i+1,precio.length());
 			}
 		}
-		
 		return precio;
+	}
+	public static void actualizarMercado(Connection con){
+		Statement st=Bd.usarBD(con);
+		ResultSet rs;
+		String[]jugador=new String[4];
+		try {
+			
+			rs=st.executeQuery("SELECT * from oferta WHERE oferta=(SELECT MAX(oferta) from oferta);");
+			while(rs.next()){
+				jugador[1]=rs.getString(1);jugador[2]=rs.getString(2);jugador[3]=rs.getInt(3)+"";jugador[4]=rs.getString(4);
+			}
+			st.executeUpdate("UPDATE usuario SET dinero=dinero-"+jugador[3]+" WHERE USUARIO='"+jugador[1]+"';");
+			st.executeUpdate("UPDATE jugador SET dueño='"+jugador[1]+"' WHERE nombre='"+jugador[2]+"';");
+			st.executeUpdate("DELETE FROM mercado WHERE nombre='"+jugador[2]+"';");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 	}
 }
