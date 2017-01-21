@@ -45,6 +45,7 @@ public class venderJugador extends JFrame{
 	}
 
 	
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
