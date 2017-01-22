@@ -83,6 +83,7 @@ public class MercadoDeFichajes extends JPanel{
 					System.out.println(jugador);
 					String nombre=getName(jugador);
 					boolean hayJugador=false;
+					
 					boolean precioMayor=false;
 					ResultSet rpd=null;
 					String envio="INSERT INTO oferta VALUES('"+MenuRegistro.getName()+"','"+nombre+"','"+Integer.parseInt(oferta.getText())+"','"+c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR)+"');";
