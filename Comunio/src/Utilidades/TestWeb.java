@@ -95,22 +95,24 @@ public class TestWeb {
 	}
 	public static void jugadoresEnMercado(Connection con){
 		Statement stmt=Bd.usarBD(con);
+		Jugador jugadoraBd=null;
+		String jugadorBD="";
 		for(int i=0;i<10;i++){
 			System.out.println("metiendo jugadores");
-			Jugador jugadoraBd=TestWeb.generarJugador(con);
-			String jugadoraBD="INSERT INTO mercado(nombre,puntuacionTotal,precio) VALUES ( '"+jugadoraBd.getNombre()+"','"+jugadoraBd.getPuntuacioTotal()+"','"+jugadoraBd.getPrecio()+"');";	
-		System.out.println("m");
-			try {
-			Thread.sleep(10);
-			stmt.executeUpdate(jugadoraBD);
+			jugadoraBd=TestWeb.generarJugador(con);
+			if(jugadoraBd.getDueño().equals("computer")){
+				jugadorBD="INSERT INTO mercado(nombre,puntuacionTotal,precio,equipo,dueño) VALUES ( '"+jugadoraBd.getNombre()+"','"+jugadoraBd.getPuntuacioTotal()+"','"+jugadoraBd.getPrecio()+"','"+jugadoraBd.getEquipo()+"','"+jugadoraBd.getDueño()+"');";	
+				try {
+					stmt.executeUpdate(jugadorBD);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}else{
+				i--;
+			}
 		
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			
 		}
 		
 	}
@@ -347,18 +349,19 @@ Tag TD -> td class="aleft"
 		int cont2=0;
 		int j=0;
 		String nomJugador=null;
-		String[]jugadores = new String[50];
+		
 		int a = (int)(Math.random()*20);
 		int cont=0;
 		Elequipo=equipos[a];
 		 ResultSet st = null;
 		 ResultSet stt=null;
+		 String[]jugadores=null;
 		 Statement stmt=Bd.usarBD(conn);
 		 Statement stmtt=Bd.usarBD(conn);
 			try{
-				 st =stmt.executeQuery("SELECT COUNT(*) FROM jugador WHERE equipo='"+Elequipo+"';") ;
+				 st =stmt.executeQuery("SELECT COUNT(*) FROM jugador WHERE equipo='"+Elequipo+"'AND dueño='computer';") ;
 				cont=Integer.parseInt(st.getString(1));
-				if(cont>35){
+				if(cont>31){
 					cont/=2;
 				}
 				jugadores = new String[cont];
@@ -371,7 +374,9 @@ Tag TD -> td class="aleft"
 				e.printStackTrace();
 				
 		}
-		int b=1+(int)(Math.random()*(cont-1));
+		int b=1+(int)(Math.random()*(cont-2));
+		System.out.println("el numero b es:"+b +"cont es:"+cont+" equipo es: "+Elequipo);
+		System.out.println(jugadores[b]);
 			nomJugador=sacarNombre(jugadores[b]);
 		Jugador jugador=new Jugador(nomJugador,sacarPrecio(nomJugador,jugadores),sacarPuntosTotales(nomJugador, jugadores),sacarPosiciones(nomJugador,jugadores),Elequipo,"computer");
 		return jugador;

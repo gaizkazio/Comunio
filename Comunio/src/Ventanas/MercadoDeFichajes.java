@@ -85,7 +85,7 @@ public class MercadoDeFichajes extends JPanel{
 					boolean hayJugador=false;
 					boolean precioMayor=false;
 					ResultSet rpd=null;
-					String envio="INSERT INTO oferta VALUES('"+MenuRegistro.getName()+"','"+nombre+"','"+Integer.parseInt(oferta.getText())+"','"+c.get(Calendar.DAY_OF_MONTH)+"-"+c.get(Calendar.MONTH)+"-"+c.get(Calendar.YEAR)+"',"+lista.getSelectedIndex()+" );";
+					String envio="INSERT INTO oferta VALUES('"+MenuRegistro.getName()+"','"+nombre+"','"+Integer.parseInt(oferta.getText())+"','"+c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR)+"');";
 					Statement stt=Bd.usarBD(con);
 					int precio1=Integer.parseInt(oferta.getText());
 					int precio2=Integer.parseInt(getPrecio(jugador));
@@ -164,18 +164,18 @@ public class MercadoDeFichajes extends JPanel{
 			}
 		Date horaDespertar = new Date(System.currentTimeMillis());
 		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR, 8);
-		c.set(Calendar.MINUTE, 0);
-		c.set(Calendar.SECOND, 0);
+		
+		
+		Timer timer = new Timer();
+		c.set(Calendar.HOUR, 2);
 		horaDespertar = c.getTime();
-		Timer timer;
-	    timer = new Timer();
 	    TimerTask task = new TimerTask(){
 			public void run() {
 				actualizarOfertas(con);
+			
 			}
 	    	
-	    };timer.schedule(task,horaDespertar,86400000);
+	    };timer.schedule(task,horaDespertar,100);
 	   
 	    Timer  timer2 = new Timer();
 	    c.set(Calendar.HOUR,2);
@@ -265,18 +265,42 @@ public class MercadoDeFichajes extends JPanel{
 		return precio;
 	}
 	public static void actualizarOfertas(Connection con){
+		int i=0;
 		Statement st=Bd.usarBD(con);
-		ResultSet rs;
+		Statement stt=Bd.usarBD(con);
+		Statement sttt=Bd.usarBD(con);
+		String[]nombresDeJugadores=new String[10];
 		String[]jugador=new String[4];
+		Date date=new Date();
+		Date ahora=new Date();
+		Calendar c= Calendar.getInstance();
 		try {
-			
-			rs=st.executeQuery("SELECT * from oferta WHERE oferta=(SELECT MAX(oferta) from oferta);");
-			while(rs.next()){
-				jugador[1]=rs.getString(1);jugador[2]=rs.getString(2);jugador[3]=rs.getInt(3)+"";jugador[4]=rs.getString(4);
+			ResultSet rsss=sttt.executeQuery("SELECT * FROM mercado WHERE dueño<>'computer';");
+			while(rsss.next()){
+				String envio="INSERT INTO oferta VALUES('computer','"+rsss.getString(1)+"',"+rsss.getInt(3)+",'"+c.getTime()+"');";
+
+				sttt.executeUpdate(envio);
 			}
+			ResultSet rss=stt.executeQuery("SELECT nombreJugador FROM oferta");
+			while(rss.next()){
+				nombresDeJugadores[i]=rss.getString(1);
+				i++;
+			}
+			for(int j=0;j<nombresDeJugadores.length;j++){
+			ResultSet rs=st.executeQuery("SELECT * from oferta WHERE oferta=(SELECT MAX(oferta) from oferta) AND nombreJugador='"+nombresDeJugadores[j]+"';");
+			while(rs.next()){
+				jugador[1]=rs.getString(1);jugador[2]=rs.getString(2);jugador[3]=rs.getInt(3)+"";date=rs.getDate(4);
+			}
+			if(jugador[1]!=null){
+			if(!(jugador[1].equals("computer"))){
 			st.executeUpdate("UPDATE usuario SET dinero=dinero-"+jugador[3]+" WHERE USUARIO='"+jugador[1]+"';");
+			}else{
+			st.executeUpdate("UPDATE usuario SET dinero=dinero+"+jugador[3]+" WHERE USUARIO='"+jugador[1]+"';");
+			}
 			st.executeUpdate("UPDATE jugador SET dueño='"+jugador[1]+"' WHERE nombre='"+jugador[2]+"';");
 			st.executeUpdate("DELETE FROM mercado WHERE nombre='"+jugador[2]+"';");
+			}
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -297,7 +321,6 @@ public class MercadoDeFichajes extends JPanel{
 			sdd=st.executeQuery("SELECT COUNT(*) FROM MERCADO");
 			j=sdd.getInt(1);
 			if(!(a==sdd.getInt(1))) {
-				System.out.println("se ha colado");
 				actualizar=true;
 			}
 			
