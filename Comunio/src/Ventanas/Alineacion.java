@@ -74,7 +74,7 @@ public class Alineacion extends JPanel {
 		setBounds(100, 100, 989, 741);
 		setLayout(null);
 		Statement st=Bd.usarBD(con);
-		Jugador[]jugadores=new Jugador[25];
+		Jugador[]jugadores=new Jugador[35];
 		int i=0;
 		try {
 			ResultSet rs=st.executeQuery("SELECT nombreJugador,posicion FROM alineacion WHERE nombreUsuario='"+MenuRegistro.usuario.getNombre()+"';");

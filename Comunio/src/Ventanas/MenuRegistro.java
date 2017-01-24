@@ -31,7 +31,7 @@ public class MenuRegistro {
 	
     private static bd_statements bds= new bd_statements();
     private static TestWeb tw= new TestWeb();
-    public static Usuario usuario=new Usuario("gaizka","gaizka");
+    public static Usuario usuario=new Usuario("gaizka","gaizka",0);
     private static String equipo="";
     private static String[] equipos={"alaves","athletic","atletico","barcelona","betis","celta","deportivo","eibar","espanyol","granada","las-palmas","leganes","malaga","osasuna","real-madrid","real-sociedad","sevilla","sporting","valencia","villarreal"};
     private final static int PT=2;
@@ -185,7 +185,7 @@ public class MenuRegistro {
 	 */
 	private void initialize(Connection con) {
 		TestWeb tw=new TestWeb();
-		tw.convertirComputer(con);
+//		tw.convertirComputer(con);
 		Calendar c = Calendar.getInstance();
 		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
@@ -312,6 +312,11 @@ public class MenuRegistro {
 						if(sd.getString("USUARIO").equals(textoUsuario.getText()) && sd.getString("CONTRASEÑA").equals(textoContraseña.getText())){	
 							usuario.setNombre(textoUsuario.getText());
 							usuario.setContraseña(textoContraseña.getText());
+							Statement st=Bd.usarBD(con);
+							ResultSet rs=st.executeQuery("SELECT puntuacion FROM usuario WHERE USUARIO='"+textoUsuario.getText()+"';");
+							while(rs.next()){
+								usuario.setPuntos(rs.getInt(1));
+							}
 							System.out.println("Se ha conectado");
 							 
 							

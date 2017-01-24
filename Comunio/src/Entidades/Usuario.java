@@ -2,10 +2,20 @@ package Entidades;
 
 public class Usuario {
 private String nombre,contraseña;
+private int puntos;
 
-public Usuario(String nombreU,String contraseñaU){
+public int getPuntos() {
+	return puntos;
+}
+
+public void setPuntos(int puntos) {
+	this.puntos = puntos;
+}
+
+public Usuario(String nombreU,String contraseñaU,int puntos){
 	nombre=nombreU;
 	contraseña=contraseñaU;
+	this.puntos=puntos;
 }
 
 public String getNombre() {

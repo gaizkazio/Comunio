@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Connection.Bd;
+import Entidades.Usuario;
 
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -86,7 +87,7 @@ public class Puntuacion extends JPanel {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+		Usuario[]usuario=new Usuario[20];
 		
 				String[] columnNames = {"Usuario","Puntuacion"};
 				DefaultTableModel dtm= new DefaultTableModel(datos,columnNames);

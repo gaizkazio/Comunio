@@ -79,7 +79,8 @@ public class cancelarVenta extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				try {
-					rss=st.executeQuery("DELETE FROM mercado WHERE nombre='"+comboBox.getSelectedItem()+"';");
+					st.executeUpdate("DELETE FROM mercado WHERE nombre='"+comboBox.getSelectedItem()+"';");
+					st.executeUpdate("DELETE FROM oferta WHERE nombreJugador='"+comboBox.getSelectedItem()+"';");
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
