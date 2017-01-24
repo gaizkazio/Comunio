@@ -47,11 +47,11 @@ public class MenuRegistro {
     	return usuario.getNombre();
     }
     public static Jugador[] ordenarArray(Jugador[] jugadores){
-    	for(int i=0;i<jugadores.length && jugadores[i]!=null && jugadores[i+1]!=null;i++){
-    		if(jugadores[i].getPosicion().equals("PT")&&(jugadores[i-1].getPosicion().equals("DF")||jugadores[i-1].getPosicion().equals("MC")||jugadores[i-1].getPosicion().equals("DL"))){
-    			Jugador jugador=jugadores[i-1];
-    			jugadores[i-1]=jugadores[i];
-    			jugadores[i]=jugador;
+    	for(int i=0;i<jugadores.length && jugadores[i+1]!=null;i++){
+    		if(jugadores[i+1].getPosicion().equals("PT")&&(jugadores[i].getPosicion().equals("DF")||jugadores[i].getPosicion().equals("MC")||jugadores[i].getPosicion().equals("DL"))){
+    			Jugador jugador=jugadores[i];
+    			jugadores[i]=jugadores[i+1];
+    			jugadores[i+1]=jugador;
     			i=0;
     		}
     		 if(jugadores[i+1].getPosicion().equals("DF")&&(jugadores[i].getPosicion().equals("MC")||jugadores[i].getPosicion().equals("DL"))){
@@ -90,7 +90,6 @@ public class MenuRegistro {
 			}
 			rs.close();
 			if(cont==0){
-				System.out.println("No tienes ningun jugador");
 				while(contJug<15){
 				Jugador jugador=tw.generarJugador(con);
 				if(jugador.getPosicion().equals("PT")&&jugador.getDueño().equals("computer") && contPT<PT){
@@ -136,15 +135,13 @@ public class MenuRegistro {
 						}
 					}
 				}		
-				System.out.println(contJug);
 				}
 				ordenarArray(alineacion);
 				for(int i=0;i<15;i++){
 					alineacion[i].setDueño(MenuRegistro.usuario.getNombre());
-					st.executeUpdate("INSERT INTO alineacion VALUES('"+alineacion[i].getNombre()+"','"+alineacion[i].getPosicion()+"','"+alineacion[i].getPuntuacioTotal()+"','"+alineacion[i].getDueño()+"');");
+					st.executeUpdate("INSERT INTO alineacion VALUES('"+alineacion[i].getNombre()+"','"+alineacion[i].getPosicion()+"','"+alineacion[i].getPuntuacioTotal()+"','"+alineacion[i].getDueño()+"','NO');");
 					
 						Thread.sleep(100);
-					System.out.println("empieza el update");
 				
 					stt.executeUpdate("UPDATE jugador SET dueño='"+alineacion[i].getDueño()+"' WHERE nombre='"+alineacion[i].getNombre()+"';");
 					Thread.sleep(100);
@@ -188,8 +185,9 @@ public class MenuRegistro {
 	 */
 	private void initialize(Connection con) {
 		TestWeb tw=new TestWeb();
+		tw.convertirComputer(con);
 		Calendar c = Calendar.getInstance();
-		c.set(Calendar.HOUR_OF_DAY, 21);
+		c.set(Calendar.HOUR_OF_DAY, 0);
 		c.set(Calendar.MINUTE, 0);
 		c.set(Calendar.SECOND, 0);
 		Date horaDespertar = c.getTime();
@@ -200,7 +198,6 @@ public class MenuRegistro {
 
 			@Override
 			public void run() {
-
 				Statement st=Bd.usarBD(con);
 				for(int k=0;k<equipos.length;k++){
 				String[] jugadores= tw.pruebaDatosJugadoresComuniazo("http://www.comuniazo.com/comunio/equipos/"+equipos[k]);
@@ -220,10 +217,10 @@ public class MenuRegistro {
 				}
 				//actualizar cada jugador
 				for(int i=0;i<cont;i++){
+					String nombre=tw.sacarNombre(i, jugadores);
+					String jugador="UPDATE jugador SET puntuacionAnterior='"+tw.sacarPuntosAnterior(nombre, jugadores)+"'WHERE nombre='"+nombre+"';";
+					String jugador2="UPDATE jugador SET puntuacionTotal='"+tw.sacarPuntosTotales(nombre, jugadores)+"' WHERE nombre='"+nombre+"';";
 					
-					String nombre=tw.sacarNombre(i+1, jugadores);
-					String jugador="UPDATE jugador SET puntuacionAnterior=( '"+tw.sacarPuntosAnterior(nombre, jugadores)+"');";
-					String jugador2="UPDATE jugador SET puntuacionAnterior=( '"+tw.sacarPuntosTotales(nombre, jugadores)+"');";
 					try {
 						st.executeUpdate(jugador);
 						st.executeUpdate(jugador2);
@@ -252,8 +249,8 @@ public class MenuRegistro {
 			}
 	    	
 	    };
-	    if(ahora.getDay()==2)
-	    timer.schedule(task, horaDespertar, 604800000);
+	    if(c.DAY_OF_WEEK==2)
+	    timer.schedule(task, horaDespertar,476000000);
 	    
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);

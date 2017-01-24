@@ -48,30 +48,6 @@ public class Bd {
 		}
 		
 		
-
-		
-		/** Reinicia en blanco las tablas de la base de datos. 
-		 * UTILIZAR ESTE MËTODO CON PRECAUCIÓN. Borra todos los datos que hubiera ya en las tablas
-		 * @param con	Conexión ya creada y abierta a la base de datos
-		 * @return	sentencia de trabajo si se borra correctamente, null si hay cualquier error
-		 */
-		public static Statement reiniciarBD( Connection con ) {
-			try {
-				Statement statement = con.createStatement();
-				statement.setQueryTimeout(30);  // poner timeout 30 msg
-				statement.executeUpdate("drop table if exists hotel");
-				statement.executeUpdate("drop table if exists habitacion");
-				statement.executeUpdate("drop table if exists reserva");
-				log( Level.INFO, "Reiniciada base de datos", null );
-				return null;
-			} catch (SQLException e) {
-				log( Level.SEVERE, "Error en reinicio de base de datos", e );
-				lastError = e;
-				e.printStackTrace();
-				return null;
-			}
-		}
-		
 		/** Cierra la base de datos abierta
 		 * @param con	Conexión abierta de la BD
 		 * @param st	Sentencia abierta de la BD

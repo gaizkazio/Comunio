@@ -80,13 +80,12 @@ public class MercadoDeFichajes extends JPanel{
 				if(oferta!=null){
 					String ofertaNum=oferta.getText(); // label donde se escribe el dinero de la apuesta
 					String jugador=(String) lista.getSelectedValue();
-					System.out.println(jugador);
 					String nombre=getName(jugador);
 					boolean hayJugador=false;
 					
 					boolean precioMayor=false;
 					ResultSet rpd=null;
-					String envio="INSERT INTO oferta VALUES('"+MenuRegistro.getName()+"','"+nombre+"','"+Integer.parseInt(oferta.getText())+"','"+c.get(Calendar.DAY_OF_MONTH)+"/"+c.get(Calendar.MONTH)+"/"+c.get(Calendar.YEAR)+"');";
+					String envio="INSERT INTO oferta VALUES('"+MenuRegistro.getName()+"','"+nombre+"','"+Integer.parseInt(oferta.getText())+"','"+c.get(Calendar.DAY_OF_MONTH)+c.get(Calendar.MONTH)+c.get(Calendar.YEAR)+"','computer');";
 					Statement stt=Bd.usarBD(con);
 					int precio1=Integer.parseInt(oferta.getText());
 					int precio2=Integer.parseInt(getPrecio(jugador));
@@ -132,7 +131,6 @@ public class MercadoDeFichajes extends JPanel{
 				int pos=lista.getSelectedIndex();
 				String jugador=(String)lista.getSelectedValue();
 				Statement st=Bd.usarBD(con);
-				System.out.println(jugador);
 				String nombre=getName(jugador);
 				try {
 					st.executeUpdate("DELETE FROM oferta WHERE nombreJugador='"+nombre+"';");
@@ -168,7 +166,7 @@ public class MercadoDeFichajes extends JPanel{
 		
 		
 		Timer timer = new Timer();
-		c.set(Calendar.HOUR, 2);
+		c.set(Calendar.HOUR, 0);
 		horaDespertar = c.getTime();
 	    TimerTask task = new TimerTask(){
 			public void run() {
@@ -176,10 +174,10 @@ public class MercadoDeFichajes extends JPanel{
 			
 			}
 	    	
-	    };timer.schedule(task,horaDespertar,100);
+	    };timer.schedule(task,horaDespertar,86400000);
 	   
 	    Timer  timer2 = new Timer();
-	    c.set(Calendar.HOUR,2);
+	    c.set(Calendar.HOUR,0);
 	    horaDespertar = c.getTime();
 	    TimerTask task2 = new TimerTask(){
 			public void run() {
@@ -259,7 +257,6 @@ public class MercadoDeFichajes extends JPanel{
 	public static String quitarPuntos(String precio){
 		for(int i=0;i<precio.length();i++){
 			if(precio.charAt(i)==".".charAt(0)){
-				System.out.println("ha encontrado el punto");
 				precio=precio.substring(0, i)+precio.substring(i+1,precio.length());
 			}
 		}
@@ -270,39 +267,48 @@ public class MercadoDeFichajes extends JPanel{
 		Statement st=Bd.usarBD(con);
 		Statement stt=Bd.usarBD(con);
 		Statement sttt=Bd.usarBD(con);
-		String[]nombresDeJugadores=new String[10];
-		String[]jugador=new String[4];
-		Date date=new Date();
-		Date ahora=new Date();
+		String[]nombresDeJugadores=new String[20];
+		String[]jugador=new String[5];
 		Calendar c= Calendar.getInstance();
+		int ahora=Integer.parseInt(c.get(Calendar.DAY_OF_MONTH)+""+c.get(Calendar.MONTH)+""+c.get(Calendar.YEAR)+"");
+		int date=0;
+		
 		try {
-			ResultSet rsss=sttt.executeQuery("SELECT * FROM mercado WHERE dueño<>'computer';");
+			ResultSet rsss=sttt.executeQuery("SELECT nombre,precio,dueño FROM mercado WHERE mercado.dueño<>'computer' AND nombre NOT IN( SELECT nombreJugador from oferta);");
 			while(rsss.next()){
-				String envio="INSERT INTO oferta VALUES('computer','"+rsss.getString(1)+"',"+rsss.getInt(3)+",'"+c.getTime()+"');";
-
+				String envio="INSERT INTO oferta VALUES('computer','"+rsss.getString(1)+"',"+rsss.getInt(2)+",'"+c.get(Calendar.DAY_OF_MONTH)+c.get(Calendar.MONTH)+c.get(Calendar.YEAR)+"','"+rsss.getString(3)+"');";
 				sttt.executeUpdate(envio);
 			}
-			ResultSet rss=stt.executeQuery("SELECT nombreJugador FROM oferta");
+			ResultSet rss=stt.executeQuery("SELECT COUNT(nombreJugador) FROM oferta");
+			nombresDeJugadores=new String[rss.getInt(1)];
+			 rss=stt.executeQuery("SELECT nombreJugador FROM oferta");
 			while(rss.next()){
 				nombresDeJugadores[i]=rss.getString(1);
 				i++;
 			}
+			
 			for(int j=0;j<nombresDeJugadores.length;j++){
 			ResultSet rs=st.executeQuery("SELECT * from oferta WHERE oferta=(SELECT MAX(oferta) from oferta) AND nombreJugador='"+nombresDeJugadores[j]+"';");
 			while(rs.next()){
-				jugador[1]=rs.getString(1);jugador[2]=rs.getString(2);jugador[3]=rs.getInt(3)+"";date=rs.getDate(4);
+				jugador[1]=rs.getString(1);jugador[2]=rs.getString(2);jugador[3]=rs.getInt(3)+"";jugador[4]=rs.getString(5);date=Integer.parseInt(rs.getString(4));
 			}
-			if(jugador[1]!=null){
+			if(jugador[1]!=null && ahora>=date){
 			if(!(jugador[1].equals("computer"))){
 			st.executeUpdate("UPDATE usuario SET dinero=dinero-"+jugador[3]+" WHERE USUARIO='"+jugador[1]+"';");
+			ResultSet s=st.executeQuery("SELECT nombre,posicion,puntuacionTotal,dueño FROM jugador WHERE nombre='"+jugador[2]+"';");
+			st.executeUpdate("INSERT INTO alineacion VALUES('"+s.getString(1)+"','"+s.getString(2)+"','"+s.getInt(3)+"','"+jugador[1]+"','NO');");
 			}else{
-			st.executeUpdate("UPDATE usuario SET dinero=dinero+"+jugador[3]+" WHERE USUARIO='"+jugador[1]+"';");
+			st.executeUpdate("UPDATE usuario SET dinero=dinero+"+jugador[3]+" WHERE USUARIO='"+jugador[4]+"';");
+			st.executeUpdate("DELETE FROM alineacion WHERE nombreJugador='"+jugador[2]+"';");
 			}
+			
 			st.executeUpdate("UPDATE jugador SET dueño='"+jugador[1]+"' WHERE nombre='"+jugador[2]+"';");
 			st.executeUpdate("DELETE FROM mercado WHERE nombre='"+jugador[2]+"';");
+			st.executeUpdate("DELETE FROM oferta WHERE nombreJugador='"+jugador[2]+"';");
+			Thread.sleep(100);
 			}
 			}
-		} catch (SQLException e) {
+		} catch (SQLException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -323,6 +329,8 @@ public class MercadoDeFichajes extends JPanel{
 			j=sdd.getInt(1);
 			if(!(a==sdd.getInt(1))) {
 				actualizar=true;
+				a=0;
+				modelo.clear();
 			}
 			
 			sd = st.executeQuery("SELECT * FROM MERCADO");

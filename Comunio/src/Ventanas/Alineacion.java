@@ -228,7 +228,7 @@ public class Alineacion extends JPanel {
 				}
 			}
 		});
-		btnVenderjugador.setBounds(815, 501, 89, 23);
+		btnVenderjugador.setBounds(815, 501, 114, 23);
 		
 		add(btnVenderjugador);
 		

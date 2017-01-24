@@ -14,24 +14,7 @@ public class Conexion {
 Connection connect;
 String url="C:\\Users\\gaizka\\Downloads\\Program\\ComunioBD";
 	
-	public void connect(){
-	 try {
-	     connect = DriverManager.getConnection("jdbc:sqlite:"+url);
-	     if (connect!=null) {
-	         System.out.println("Conectado");
-	     }
-	 }catch (SQLException ex) {
-	     System.err.println("No se ha podido conectar a la base de datos\n"+ex.getMessage());
-	 }
-	}
-
-	 public void close(){
-	        try {
-	            connect.close();
-	        } catch (SQLException ex) {
-	            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-	        }
-	 }
+	
 	 public void registrarse(String usuario,String contraseña,JTextField textoUsuario,JTextField textoContraseña){
 			usuario=textoUsuario.getText();
 			contraseña=textoContraseña.getText();
@@ -56,12 +39,7 @@ String url="C:\\Users\\gaizka\\Downloads\\Program\\ComunioBD";
 			}
 	 }
 	 
-	 public static void main (String[]args){
-		 Conexion con = new Conexion();
-	        con.connect();
-	    
-	        con.close();
-	 }
+	
 	 
 	 
 	 

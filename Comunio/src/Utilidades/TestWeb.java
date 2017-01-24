@@ -111,8 +111,6 @@ public class TestWeb {
 			}else{
 				i--;
 			}
-		
-			
 		}
 		
 	}
@@ -413,7 +411,7 @@ Tag TD -> td class="aleft"
 						contador++;
 						posNom=l;
 						posicion=equipo[i].substring(p+1, posNom);
-						System.out.println(posicion);
+						
 							
 					}
 					if(cont==12 && cont12==0){
@@ -434,6 +432,7 @@ Tag TD -> td class="aleft"
 				}
 				i=equipo.length;	}
 		}
+		System.out.println("sacar puntos anterior: "+posicion);
 		return posicion;
 	}
 	public static String sacarPuntosTotales(String nombre,String[]equipo){
@@ -466,6 +465,7 @@ Tag TD -> td class="aleft"
 				}
 				i=equipo.length;	}
 		}
+		System.out.println("sacar puntos totales: "+posicion);
 		return posicion;
 	}
 	

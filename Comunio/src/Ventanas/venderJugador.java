@@ -75,8 +75,10 @@ public class venderJugador extends JFrame{
 					System.out.println(rs.getRow()+" "+rss.getRow());
 					while(rs.next()&& rss.getRow() == 0){
 						 jugador= new Jugador();
-						jugador.setNombre(rs.getString(1));jugador.setPuntuacioTotal(rs.getString(2));jugador.setPrecio(rs.getString(3));jugador.setEquipo(rs.getString(4));
-						st.executeUpdate("INSERT INTO mercado VALUES('"+jugador.getNombre()+"','"+jugador.getPuntuacioTotal()+"','"+jugador.getPrecio()+"','"+jugador.getEquipo()+"','"+MenuRegistro.usuario.getNombre()+"');");
+						
+						jugador.setNombre(rs.getString(1));jugador.setPuntuacioTotal(rs.getString(2));jugador.setPrecio(MercadoDeFichajes.quitarPuntos(rs.getString(3)));jugador.setEquipo(rs.getString(4));
+						System.out.println(jugador.getPrecio());
+						st.executeUpdate("INSERT INTO mercado VALUES('"+jugador.getNombre()+"','"+jugador.getPuntuacioTotal()+"',"+jugador.getPrecio()+",'"+jugador.getEquipo()+"','"+MenuRegistro.usuario.getNombre()+"');");
 
 					}
 					
