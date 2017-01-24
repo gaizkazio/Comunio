@@ -217,20 +217,25 @@ public class Alineacion extends JPanel {
 		add(btnNewButton);
 		btnVenderjugador.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
+				
 				Frame frame2= new venderJugador(ia,jugadores,con);
 				frame2.setVisible(true);
-				while(frame2.isActive()){
-					
-				}
-				if(!frame2.isActive()){
-					setVisible(true);
-				}
+				
 			}
 		});
-		btnVenderjugador.setBounds(815, 501, 114, 23);
+		btnVenderjugador.setBounds(815, 501, 132, 23);
 		
 		add(btnVenderjugador);
+		
+		JButton btnNewButton_1 = new JButton("cancelarVenta");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Frame frame3= new cancelarVenta(con);
+				frame3.setVisible(true);
+			}
+		});
+		btnNewButton_1.setBounds(480, 501, 119, 23);
+		add(btnNewButton_1);
 		
 		
 	}
@@ -289,7 +294,4 @@ public class Alineacion extends JPanel {
 		}
 	 }
  }
- 
- 
- 
 }

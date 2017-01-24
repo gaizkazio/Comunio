@@ -4,10 +4,15 @@ import java.awt.EventQueue;
 
 import javax.swing.*;
 
+import Connection.Bd;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.awt.event.ActionEvent;
 
 public class Noticias extends JFrame{
@@ -82,11 +87,28 @@ public class Noticias extends JFrame{
 										scrollLista.setBounds(540, 200, 305, 150);
 										scrollLista.setViewportView(list);
 										panel1.add(scrollLista);
+										Statement st=Bd.usarBD(con);
+										try {
+											ResultSet rs=st.executeQuery("SELECT * FROM noticias");
+											while(rs.next()){
+												modelo.addElement(rs.getString(1));
+												 list.setModel(modelo);
+											}
+										} catch (SQLException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
 										
 										JButton btnAadir = new JButton("A\u00D1ADIR");
 										btnAadir.addActionListener(new ActionListener() {
 											public void actionPerformed(ActionEvent arg0) {
 												 String nombre=textField.getText();
+												 try {
+													st.executeUpdate("INSERT INTO noticias VALUES('"+nombre+"');");
+												} catch (SQLException e) {
+													// TODO Auto-generated catch block
+													e.printStackTrace();
+												}
 												 modelo.addElement(nombre);
 												 list.setModel(modelo);
 												 textField.setText("");
